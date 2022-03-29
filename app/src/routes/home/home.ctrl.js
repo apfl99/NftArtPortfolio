@@ -12,7 +12,28 @@ const output = {
     },
     register : (req,res) => {
         res.render("home/register");
-    }
+    },
+    artDetail : (req,res) => {
+        res.render("home/art_detail");
+    },
+    art : (req,res) => {
+        res.render("home/art");
+    },    
+    authorPortfolio : (req,res) => {
+        res.render("home/author_portfolio");
+    },
+    authors : (req,res) => {
+        res.render("home/authors");
+    },    
+    myPage : (req,res) => {
+        res.render("home/mypage");
+    },    
+    errPage : (req,res) => {
+        res.render("home/404");
+    },    
+    generateNFT : (req,res) => {
+        res.render("home/generateNFT");
+    },    
 };
 
 const process = {

@@ -32,10 +32,9 @@ class User {
         try {
             const client = this.body;
             const response = await UserStorage.save(client);
-            alert('회원가입 성공');
             return response;
         } catch(err) {
-            return { success: false, msg:err};
+            return { success: false, msg:"회원가입 성공"};
         }
     }
 }
