@@ -7,7 +7,7 @@ class User {
         this.body = body;
     }
 
-    async login() {
+    async login(req) {
         const body = this.body;
 
         try {
@@ -37,6 +37,7 @@ class User {
             return { success: false, msg:"회원가입 성공"};
         }
     }
+
 }
 
 module.exports = User;  

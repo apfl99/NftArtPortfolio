@@ -10,7 +10,8 @@ loginBtn.addEventListener("click", login);
 function login() {
     const req = {
         id: id.value,
-        passwd: passwd.value
+        passwd: passwd.value,
+        logined: false
     };
     //프론트 -> 서버
     fetch("/login", {
@@ -22,8 +23,11 @@ function login() {
     })
     .then((res) => res.json())
     .then((res) => {
-        if (res.success) {
-            location.href = "/";
+        if (res.success) {            
+            //로그인 성공시 홈 화면으로
+            window.sessionStorage.setItem('isLogined',true);
+            window.sessionStorage.setItem('userId',req.id);
+            location.href='/';
         } else {
             if (res.err) return alert(res.err); // 실제로는 err 값이 알림창으로 나오면 안 됨
             alert(res.msg);

@@ -3,9 +3,11 @@
 
 const User = require("../../models/User");
 
+
+
 const output = {
     root : (req,res) => {
-        res.render("home/home");
+        res.render('home/home');
     },
     login : (req,res) => {
         res.render("home/login");
@@ -39,7 +41,7 @@ const output = {
 const process = {
     login : async (req,res) => {
         const user = new User(req.body);
-        const response = await user.login();
+        const response = await user.login(req);
         return res.json(response);
     },
     register : async (req,res) => {
@@ -48,6 +50,8 @@ const process = {
         return res.json(response);
     },
 };
+
+
 
 module.exports = {
     output,

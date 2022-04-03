@@ -74,7 +74,9 @@
                     <input id="searchInput" class="searchInput" type="text" name="" placeholder="Search..." value="">
                             <i class="searchButton fa fa-search" onclick="javascript:btn()"></i>
                   </li>
-                  <li><a href="/login">Login</a></li>
+                  <li id="Login"><a href="/login">Login</a></li>
+                  <li style="display:none" id="MyPage" ><a href="/mypage">MyPage</a></li>
+                  <li style="display:none" id="Logout" ><a>Logout</a></li>
             </ul>
           </div>
         </div>
@@ -204,7 +206,6 @@
     <script src="/lib/smoothscroll.js"></script>
     <script src="/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
     <script src="/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
-
     <script src="/js/home/plugins.js"></script>
     <script src="/js/home/main.js"></script>
     <script src="/js/home/login.js" defer></script>

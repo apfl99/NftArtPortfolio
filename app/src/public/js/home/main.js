@@ -1,4 +1,30 @@
-console.log('%c Proudly Crafted with ZiOn.', 'background: #222; color: #bada55');
+/* ---------------------------------------------- /*
+ * Login -> session -> changeUI
+ /* ---------------------------------------------- */
+$(document).ready(function() {
+    if(window.sessionStorage.getItem('isLogined')){
+        $('#Login').hide();
+        $('#Logout').show();
+        $('#MyPage').show();
+    }
+});
+
+/* ---------------------------------------------- /*
+ * Logout -> session -> changeUI
+ /* ---------------------------------------------- */
+const logoutBtn = document.querySelector("#Logout");
+
+
+logoutBtn.addEventListener("click", function() {
+    window.sessionStorage.clear();
+    $('#Login').show();
+    $('#Logout').hide();
+    $('#MyPage').hide();
+    location.href ='/';
+});
+
+
+
 
 /* ---------------------------------------------- /*
  * PopUp
@@ -13,8 +39,8 @@ $(document).ready(function() {
         $("#banner_online").fadeOut();
         $("#modal").fadeOut();
     });
-});
 
+});
 /* ---------------------------------------------- /*
  * Preloader
  /* ---------------------------------------------- */

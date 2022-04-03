@@ -74,7 +74,9 @@
                   <input id="searchInput" class="searchInput" type="text" name="" placeholder="Search..." value="">
                           <i class="searchButton fa fa-search" onclick="javascript:btn()"></i>
                 </li>
-              <li><a href="/login">Login</a></li>
+                <li id="Login"><a href="/login">Login</a></li>
+                <li style="display:none" id="MyPage" ><a href="/mypage">MyPage</a></li>
+                <li style="display:none" id="Logout" ><a>Logout</a></li>
             </ul>
           </div>
         </div>
@@ -188,7 +190,7 @@
                               <input class="btn btn-d btn-round" value="등록" type="submit">
                             </div>
                           </div>
-                        </form>
+                    </form>
                   <div class="ajax-response font-alt" id="contactFormResponse"></div>
                 </div>
               </div>
