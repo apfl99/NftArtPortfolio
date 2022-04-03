@@ -23,8 +23,19 @@ logoutBtn.addEventListener("click", function() {
     location.href ='/';
 });
 
+/* ---------------------------------------------- /*
+ * generateNFT
+ /* ---------------------------------------------- */
+const NFTBtn = document.querySelector("#NFT");
 
-
+NFTBtn.addEventListener("click", function() {
+    if(window.sessionStorage.getItem('isLogined')){
+        location.href='/author_portfolio_nft';
+    } else {
+        alert('로그인을 먼저 해주세요.');
+        location.href='/login';
+    }
+});
 
 /* ---------------------------------------------- /*
  * PopUp

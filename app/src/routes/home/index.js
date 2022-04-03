@@ -12,6 +12,7 @@ router.get('/register',ctrl.output.register);
 router.get('/art_detail',ctrl.output.artDetail);
 router.get('/art',ctrl.output.art);
 router.get('/author_portfolio',ctrl.output.authorPortfolio);
+router.get('/author_portfolio_nft',ctrl.output.authorPortfolio_nft);
 router.get('/authors',ctrl.output.authors);
 router.get('/mypage',ctrl.output.myPage);
 router.get('/404',ctrl.output.errPage);

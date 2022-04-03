@@ -24,6 +24,9 @@ const output = {
     authorPortfolio : (req,res) => {
         res.render("home/author_portfolio");
     },
+    authorPortfolio_nft : (req,res) => {
+        res.render("home/author_portfolio_nft");
+    },
     authors : (req,res) => {
         res.render("home/authors");
     },    
