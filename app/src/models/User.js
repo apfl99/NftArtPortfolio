@@ -3,8 +3,9 @@
 const UserStorage = require("./UserStorage");
 
 class User {
-    constructor(body) {
+    constructor(body,ipfsResultVal) {
         this.body = body;
+        this.ipfsVal = ipfsResultVal;
     }
 
     async login(req) {
@@ -34,8 +35,20 @@ class User {
             const response = await UserStorage.save(client);
             return response;
         } catch(err) {
-            return { success: false, msg:"회원가입 성공"};
+            return { success: false, msg:"DB 에러"};
         }
+    }
+
+    async art_register() {
+        try {
+            const artInfo = this.body;
+            const ipfsVal = this.ipfsVal;
+            const response = await UserStorage.art_save(artInfo,ipfsVal);
+            return response;
+        } catch(err) {
+            return { success: false, msg:"DB 에러"};
+        }
+
     }
 
 }

@@ -23,6 +23,16 @@ class UserStorage {
             });
         });
     };
+
+    static async art_save(artInfo,ipfsVal) {
+        return new Promise((resolve, reject) => {
+            const query2 = "INSERT INTO NFT.art(art.art_name, art.author_id, art.ipfs_link, art.art_explain, art.art_category, art.ipfs_cid) VALUES(?, ?, ?, ?, ?, ?);";
+            db.query(query2, [artInfo.artName, artInfo.userId, ipfsVal.ipfsUrl, artInfo.artDescription, artInfo.artCategory, ipfsVal.ipfsCid], (err) => {
+                if(err) reject(`${err}`);
+                resolve({success: true});
+            });
+        });
+    };
 }  
 
 
