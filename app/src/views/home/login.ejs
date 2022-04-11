@@ -69,73 +69,94 @@
               <li><a href="/" >홈</a>
               <li><a href="/authors">작가</a>
               <li ><a href="/art">작품</a>
-                <li ><a href="/author_portfolio">NFT 발행</a>
+              <li id="NFT"><a>NFT 발행</a></li>
                   <li class="searchBox">
                     <input id="searchInput" class="searchInput" type="text" name="" placeholder="Search..." value="">
                             <i class="searchButton fa fa-search" onclick="javascript:btn()"></i>
                   </li>
                   <li><a href="/login">Login</a></li>
-                  <li>
-                    <!-- <button id='loginButton' onclick="" class="mx-auto rounded-md p-2 bg-purple-500 text-white"> -->
-                      <div style="text-align:center">
-                      <img id="loginButton" src="images/favicons/메타마스크.png" width="20" height="20" onclck="javascript:btn()">
-                      <!-- Login with MetaMask -->
-                    <!-- </button> -->
-                    <p id='userWallet' class='text-lg text-gray-600 my-2'></p>
-                    
-                  </div>
-                    <!-- <script>
-                      window.userWalletAddress = null
-                      const loginButton = document.getElementById('loginButton')
-                      const userWallet = document.getElementById('userWallet')
-                  
-                      function toggleButton() {
-                        if (!window.ethereum) {
-                          loginButton.innerText = 'MetaMask is not installed'
-                          loginButton.classList.remove('bg-purple-500', 'text-white')
-                          loginButton.classList.add('bg-gray-500', 'text-gray-100', 'cursor-not-allowed')
-                          return false
-                        }
-                  
-                        loginButton.addEventListener('click', loginWithMetaMask)
-                      }
-                  
-                      async function loginWithMetaMask() {
-                        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
-                          .catch((e) => {
-                            console.error(e.message)
-                            return
-                          })
-                        if (!accounts) { return }
-                  
-                        window.userWalletAddress = accounts[0]
-                        userWallet.innerText = window.userWalletAddress
-                        loginButton.innerText = 'Sign out of MetaMask'
-                  
-                        loginButton.removeEventListener('click', loginWithMetaMask)
-                        setTimeout(() => {
-                          loginButton.addEventListener('click', signOutOfMetaMask)
-                        }, 200)
-                      }
-                  
-                      function signOutOfMetaMask() {
+
+                  <li>                
+                  <!-- <button id='loginButton' onclick="" class="mx-auto rounded-md p-2 bg-purple-500 text-white">
+                    MetaMask
+                  </button>
+                  <p id='userWallet' class='text-lg text-gray-600 my-2'></p> -->
+              
+                  <!-- <button id="loginButton" class="UnstyledButtonreact__UnstyledButton-sc-ty1bh0-0 btgkrL Blockreact__Block-sc-1xf18x6-0 Flexreact__Flex-sc-1twd32i-0 Itemreact__ItemBase-sc-1idymv7-0 elqhCm jYqxGr glymPt" type="button">
+                    <div size="24" class="Blockreact__Block-sc-1xf18x6-0 Flexreact__Flex-sc-1twd32i-0 FlexColumnreact__FlexColumn-sc-1wwz3hp-0 VerticalAlignedreact__VerticalAligned-sc-b4hiel-0 CenterAlignedreact__CenterAligned-sc-cjf6mn-0 Avatarreact__AvatarContainer-sc-sbw25j-0 ItemAvatarreact__ItemAvatarContainer-sc-s8gv83-0 AMWWS jYqxGr ksFzlZ iXcsEj cgnEmv dukFGY kYWTKj">
+                      <img alt="" height="30px" src="/images/favicons/메타마스크.png" size="24" width="24" height="24" class="Blockreact__Block-sc-1xf18x6-0 Avatarreact__ImgAvatar-sc-sbw25j-1 hYWam hzWBaN">
+                    </div>
+                    <div class="Blockreact__Block-sc-1xf18x6-0 Flexreact__Flex-sc-1twd32i-0 FlexColumnreact__FlexColumn-sc-1wwz3hp-0 VerticalAlignedreact__VerticalAligned-sc-b4hiel-0 Itemreact__ItemContent-sc-1idymv7-1 elqhCm jYqxGr ksFzlZ iXcsEj hTefVc">
+                      <span font-weight="700" font-size="14px" class="Blockreact__Block-sc-1xf18x6-0 Textreact__Text-sc-1w94ul3-0 Itemreact__ItemTitle-sc-1idymv7-2 hdBaTV YCEJd">MetaMask</span>
+                    </div>
+                    <div class="Blockreact__Block-sc-1xf18x6-0 Itemreact__ItemSide-sc-1idymv7-3 elqhCm cDmIYg">
+                      <span class="Blockreact__Block-sc-1xf18x6-0 Textreact__Text-sc-1w94ul3-0 Itemreact__ItemDescription-sc-1idymv7-6 elqhCm gwsEKa">
+                      </span></div></button> -->
+                      
+                
+                      <button id='loginButton' onclick="" class="mx-auto rounded-md p-2 bg-purple-500 text-white">
+                        메타마스크
+                      </button>
+                      
+                      <script>
                         window.userWalletAddress = null
-                        userWallet.innerText = ''
-                        loginButton.innerText = 'Sign in with MetaMask'
-                  
-                        loginButton.removeEventListener('click', signOutOfMetaMask)
-                        setTimeout(() => {
+                        const loginButton = document.getElementById('loginButton')
+                        const userWallet = document.getElementById('userWallet')
+                    
+                        function toggleButton() {
+                          if (!window.ethereum) {
+                            loginButton.innerText = 'MetaMask is not installed'
+                            loginButton.classList.remove('bg-purple-500', 'text-white')
+                            loginButton.classList.add('bg-gray-500', 'text-gray-100', 'cursor-not-allowed')
+                            return false
+                          }
+                    
                           loginButton.addEventListener('click', loginWithMetaMask)
-                        }, 200)
-                      }
-                  
-                      window.addEventListener('DOMContentLoaded', () => {
-                        toggleButton()
-                      });
-                    </script> -->
+                        }
+                    
+                        async function loginWithMetaMask() {
+                          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+                            .catch((e) => {
+                              console.error(e.message)
+                              return
+                            })
+                          if (!accounts) { return }
+                    
+                          window.userWalletAddress = accounts[0]
+                          userWallet.innerText = window.userWalletAddress
+                          loginButton.innerText = 'metamask 로그아웃'
+                    
+                          loginButton.removeEventListener('click', loginWithMetaMask)
+                          setTimeout(() => {
+                            loginButton.addEventListener('click', signOutOfMetaMask)
+                          }, 200)
+                        }
+                    
+                        function signOutOfMetaMask() {
+                          window.userWalletAddress = null
+                          userWallet.innerText = ''
+                          loginButton.innerText = 'metamask 로그인'
+                    
+                          loginButton.removeEventListener('click', signOutOfMetaMask)
+                          setTimeout(() => {
+                            loginButton.addEventListener('click', loginWithMetaMask)
+                          }, 200)
+                        }
+                    
+                        window.addEventListener('DOMContentLoaded', () => {
+                          toggleButton()
+                        });
+                      </script>
 
                   </li>
+
                 </ul> 
+                  <li id="Login"><a href="/login">Login</a></li>
+                  <li style="display:none" id="MyPage" ><a href="/author_portfolio">MyPage</a></li>
+
+                  <li style="display:none" id="Logout" ><a>Logout</a></li>
+            </ul>
+
           </div>
         </div>
       </nav>
@@ -249,6 +270,7 @@
       </div>
       <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
     </main>
+
     <!--  
     JavaScripts
     =============================================
@@ -267,8 +289,8 @@
     <script src="/js/home/plugins.js"></script>
     <script src="/js/home/main.js"></script>
     <script src="/js/home/login.js" defer></script>
-    <script src="https://unpkg.com/@metamask/detect-provider/dist/detect-provider.min.js"></script>
     <script src="/js/home/metamask.js"></script>
+
 
   </body>
 </html>
