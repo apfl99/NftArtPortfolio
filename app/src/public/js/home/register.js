@@ -36,6 +36,7 @@ function register() {
         .then((res) => res.json())
         .then((res) => {
             if (res.success) {
+                alert('회원가입 성공');
                 location.href = "/login";
             } else {
                 alert(res.msg);
