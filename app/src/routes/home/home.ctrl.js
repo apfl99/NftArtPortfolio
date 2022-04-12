@@ -17,6 +17,7 @@ var ipfs = ipfsAPI('infura-ipfs.io', '5001', {protocol: 'https'}) // leaving out
 
 //DB
 const db = require("../../config/db");
+const { request } = require("http");
 
 const output = {
     root : (req,res) => {
@@ -29,10 +30,30 @@ const output = {
         res.render("home/register");
     },
     artDetail : (req,res) => {
-        res.render("home/art_detail");
+        // 작품 Id
+        const artId = req.query.viewId;
+        //조회수 처리
+        const query1 = "UPDATE NFT.art SET view_count = view_count +1 where art_id=?;"
+        db.query(query1,[artId], (err,rows) => {
+            if(err) {
+                console.error("query error" + err);
+                res.status(500).send("Internal Sever Error");
+            } else {
+                // 뷰
+                const query2 = "SELECT art.*, login_designer.username FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId where art.art_id=?;";
+                db.query(query2, [artId], (err,rows) => {
+                    if(err) {
+                        console.error("query error" + err);
+                        res.status(500).send("Internal Sever Error");
+                    } else {
+                        res.render("home/art_detail",{row : rows[0]});
+                    }
+                })
+            }
+        })
     },
     art : (req,res) => {
-        const query = "SELECT art.*, login.username FROM art LEFT JOIN login ON art.author_id = login.email ORDER BY art.art_id;";
+        const query = "SELECT art.*, login_designer.username FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId ORDER BY art.art_id;";
         db.query(query,(err,rows) => {
             if(err) {
                 console.error("query error" + err);

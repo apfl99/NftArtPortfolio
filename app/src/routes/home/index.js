@@ -33,4 +33,5 @@ router.post('/artRegister',upload.single("files"),ctrl.process.artRegister);
 
 
 
+
 module.exports = router;
