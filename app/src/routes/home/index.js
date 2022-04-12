@@ -29,7 +29,7 @@ router.get('/generateNFT',ctrl.output.generateNFT);
 router.post('/login', ctrl.process.login);
 router.post('/register',ctrl.process.register);
 router.post('/artRegister',upload.single("files"),ctrl.process.artRegister);
-
+router.post('/personalinfoModification',upload.single("profile"),ctrl.process.personalinfoModification);
 
 
 

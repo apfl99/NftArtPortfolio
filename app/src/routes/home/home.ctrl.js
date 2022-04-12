@@ -101,7 +101,37 @@ const process = {
         const response = await user.art_register();
         return res.json(response);
         
+    },
+
+    personalinfoModification : async (req,res) => { 
+
+        // 파일 ipfs 등록 및 CID, ipfsLink 반환
+        var data = new Buffer(fs.readFileSync(req.file.path));
+
+        //IPFS
+        var ipfsVal = await ipfs.add(data);
+
+        //ipfs link generate
+        var url = 'https://infura-ipfs.io/ipfs/';
+        url += (ipfsVal[0].hash);
+        url += '?filename=';
+        url += (req.file.originalname);
+        var ipfsUrl =  encodeURI(url);
+
+
+        //넘겨줄 ipfs값들(url,cid)
+        var ipfsResultVal = {
+            ipfsCid: ipfsVal[0].hash,
+            ipfsUrl: ipfsUrl
+        }
+
+      //DB
+        const user = new User(req.body,ipfsResultVal);
+        const response = await user.personal_info();
+        return res.json(response);
+        
     }
+
 };
 
 

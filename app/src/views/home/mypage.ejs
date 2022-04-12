@@ -96,17 +96,17 @@
               <div class="row" style="display:flex; width:100%; justify-content:center;">
                 <div class="col-sm-8" style="float: left;">
                     <h2 class="module-title font-alt">개인 정보 수정</h2>
-                    <form th:action="@{/save}" th:method="post" enctype="multipart/form-data">
+                    <form th:action="@{/save}" th:method="post" enctype="multipart/form-data" id="personal_info_modification">
                       <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">작가 프로필 사진</label>
                         <div class="col-sm-12 col-md-7">
-                          <input type="file" name="file" id="file">
+                          <input type="file" name="profile" id="profile">
                         </div>
                       </div>
                         <div class="form-group row mb-4">
                             <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">작가명</label>
                             <div class="col-sm-12 col-md-7">
-                              <input type="text" class="form-control" id="name" name="name">
+                              <input type="text" class="form-control" id="DesignerName" name="DesignerName">
                             </div>
                           </div>
                         <div class="form-group row mb-4">
@@ -293,5 +293,6 @@
   <script src="/js/home/plugins.js"></script>
   <script src="/js/home/main.js"></script>
   <script src="/js/home/art_register.js"></script>
+  <script src="/js/home/Personal_info_modification.js"></script>
 </body>
 </html>
