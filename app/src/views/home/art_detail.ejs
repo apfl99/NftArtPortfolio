@@ -113,69 +113,28 @@
         <section class="module">
           <div class="container">
             <div class="row">
-                <div class="section" style="float: left;">
-                    <input type="radio" name="slide" id="slide01" checked>
-                    <input type="radio" name="slide" id="slide02">
-                    <input type="radio" name="slide" id="slide03">
-                    <div class="slidewrap">
-                        <ul class="slidelist">
-                            <li class="slideitem">
-                                <a>
-                                    <img src="assets/images/shop/product-7.jpg">
-                                </a>
-                            </li>
-                            <li class="slideitem">
-                                <a>
-                                    <img src="assets/images/shop/product-8.jpg">
-                                </a>
-                            </li>
-                            <li class="slideitem">
-                                <a>
-                                    <img src="assets/images/shop/product-9.jpg">
-                                </a>
-                            </li>
-                            <div class="slide-control">
-                                <div class="control01">
-                                    <label for="slide03" class="left"></label>
-                                    <label for="slide02" class="right"></label>
-                                </div>
-                                <div class="control02">
-                                    <label for="slide01" class="left"></label>
-                                    <label for="slide03" class="right"></label>
-                                </div>
-                                <div class="control03">
-                                    <label for="slide02" class="left"></label>
-                                    <label for="slide01" class="right"></label>
-                                </div>
-                            </div>
-                        </ul>
-                        <ul class="slide-pagelist">
-                            <li><label for="slide01"></label></li>
-                            <li><label for="slide02"></label></li>
-                            <li><label for="slide03"></label></li>
-                        </ul>
+                <div class="col-sm-6" style="float: left; width:50%; text-align:center">
+                  <img src='<%=row.ipfs_link%>'>
+                </div>
+                <div class="col-sm-6" style="float: right; width:50%;">
+                  <div class="col-sm-12">
+                    <h1 class="product-title font-alt"><%=row.art_name%></h1>
+                    <a href="/author_portfolio"><u><h5 class="product-title font-alt"><%=row.username%></h5></u></a>
+                  </div>
+                  <div class="row mb-20">
+                    <div class="col-sm-12"><span><i class="fa fa-star star"></i></span><span><i class="fa fa-star star"></i></span><span><i class="fa fa-star star"></i></span><span><i class="fa fa-star star"></i></span><span><i class="fa fa-star star-off"></i></span><a class="open-tab section-scroll" href="#reviews">-2customer reviews</a>
                     </div>
-                
-                </div><div class="col-sm-6" style="float: right; padding:0;">
-                <div class="row">
-                  <div class="col-sm-12">
-                    <h1 class="product-title font-alt">작품명</h1>
-                    <a href="/author_portfolio"><u><h5 class="product-title font-alt">작가명</h5></u></a>
                   </div>
-                </div>
-                <div class="row mb-20">
-                  <div class="col-sm-12"><span><i class="fa fa-star star"></i></span><span><i class="fa fa-star star"></i></span><span><i class="fa fa-star star"></i></span><span><i class="fa fa-star star"></i></span><span><i class="fa fa-star star-off"></i></span><a class="open-tab section-scroll" href="#reviews">-2customer reviews</a>
+                  <div class="row mb-20">
+                    <p>
+                      <button class="btn btn-d btn-circle" type="submit"><i class="fa fa-heart"></i>좋아요 <%=row.like%>건</button>
+                    </p>
                   </div>
-                </div>
-                <div class="row mb-20">
-                  <p>
-                    <button class="btn btn-d btn-circle" type="submit"><i class="fa fa-heart"></i>좋아요 2건</button>
-                  </p>
-                </div>
-                <div class="row mb-20">
-                  <div class="col-sm-12">
-                    <div class="description">
-                      <p>작품 설명</p>
+                  <div class="row mb-20">
+                    <div class="col-sm-12">
+                      <div class="description">
+                        <p><%=row.art_explain%></p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -189,8 +148,7 @@
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="description">
-                    <p>Everyone realizes why a new common language would be desirable: one could refuse to pay expensive translators. To achieve this, it would be necessary to have uniform grammar, pronunciation and more common words. If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual languages.</p>
-                    <p>The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ in their grammar, their pronunciation and their most common words.</p>
+                    <p><%=row.art_explain%></p>
                   </div>
                   <div class="tab-pane" id="data-sheet">
                     <table class="table table-striped ds-table table-responsive">

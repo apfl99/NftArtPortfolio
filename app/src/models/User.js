@@ -15,7 +15,7 @@ class User {
             const user = await UserStorage.getUserInfo(body.id);
 
             if (user) {
-                if (user.email == body.id && user.password == body.passwd) {
+                if (user.userId == body.id && user.password == body.passwd) {
                     return { success: true };
                 }
     

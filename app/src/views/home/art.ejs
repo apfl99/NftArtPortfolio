@@ -5,16 +5,17 @@
       .profile_img {
         width: 22px;
         height: 22px; 
-        border-radius: 70%; 
+        border-radius: 70%;
+   
       }
       .btn-like {
-        width: 30px;
-        height: 30px;
+        width: 15px;
+        height: 15px;
         cursor: pointer;
         position: absolute;
-        right: 6px;
-        bottom: -140%;
-        border: none;
+        border: none; 
+        right: 10px;
+        bottom : 47%; 
       }
     </style>
     <meta charset="utf-8">
@@ -151,10 +152,10 @@
               <% for(let row of rows) { %>
               <div class="col-sm-6 col-md-3 col-lg-3">
                 <div class="shop-item" style="margin: 0;">
-                  <div class="shop-item-image"><img src='<%=row.ipfs_link%>'/>
-                    <div class="shop-item-detail"><a class="btn btn-round btn-b" href="/art_detail">작품 상세 보기</span></a>
-                      <button class="btn-like" type="submit" onclick="alert('좋아요 누름')"><img src="/images/heart.png" onmouseover="this.src='/images/full-heart.png'"
-                        onmouseout="this.src='/images/heart.png'"></button>
+                  <div class="shop-item-image"><img src='<%=row.ipfs_link%>' style="width:fit-content; height:250px;"/>
+                    <div class="shop-item-detail"><button class="btn btn-d btn-round" type="submit" onclick="location.href='/art_detail?viewId=<%=row.art_id%>'">작품 상세보기</button> 
+                      <a class="btn-like" type="submit" onclick="alert('좋아요 누름')"><img src="/images/heart.png" onmouseover="this.src='/images/full_heart.png'"
+                        onmouseout="this.src='/images/heart.png'"></a>
                     </div>
                   </div>
                 </div>

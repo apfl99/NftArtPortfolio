@@ -1,11 +1,11 @@
 .shop-item {
 	text-align: center;
-	margin: 0 0 40px;
+	margin: 0px;
 }
 
 .shop-item-image {
-	position: relative;
-	overflow: hidden;
+	position: absolute;
+	text-align: center;
 }
 
 .shop-item-image img {
@@ -64,9 +64,9 @@
 	transform: translateY(50%);
 }
 
-/* -------------------------------------------------------------------
+/* —————————————————————————————————
 	Exclusive products
-------------------------------------------------------------------- */
+————————————————————————————————— */
 
 .ex-product {
 	opacity: .7;
