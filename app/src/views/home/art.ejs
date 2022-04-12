@@ -113,7 +113,7 @@
           <div class="container">
             <form class="row">
               <div class="col-sm-4 mb-sm-20">
-                <select class="form-control">
+                <select class="form-control" id="art_select">
                   <option selected="selected">기본 정렬</option>
                   <option>인기있는 작품</option>
                   <option>가장 많이 본 작품</option>
@@ -121,7 +121,7 @@
                 </select>
               </div>
               <div class="col-sm-3 mb-sm-20">
-                <select class="form-control">
+                <select class="form-control" id="major_select">
                   <option selected="selected">전체</option>
                   <option>커뮤니케이션디자인전공</option>
                   <option>텍스타일디자인전공</option>
@@ -139,10 +139,10 @@
                   <option>디지털콘텐츠전공</option>
                 </select>
               </div>
-              <div class="col-sm-3">
-                <button class="btn btn-block btn-round btn-g" type="submit">Apply</button>
-              </div>
             </form>
+          <div class="col-sm-3 mb-sm-20" style="float: right; position:inline-start">
+              <button class="btn btn-block btn-round btn-g" onclick="move()">Apply</button>
+            </div>
           </div>
         </section>
         <hr class="divider-w">
@@ -154,7 +154,7 @@
                 <div class="shop-item" style="margin: 0;">
                   <div class="shop-item-image"><img src='<%=row.ipfs_link%>' style="width:fit-content; height:250px;"/>
                     <div class="shop-item-detail"><button class="btn btn-d btn-round" type="submit" onclick="location.href='/art_detail?viewId=<%=row.art_id%>'">작품 상세보기</button> 
-                      <a class="btn-like" type="submit" onclick="alert('좋아요 누름')"><img src="/images/heart.png" onmouseover="this.src='/images/full_heart.png'"
+                      <a class="btn-like" type="submit" onclick="location.href='/art?likeId=<%=row.art_id%>'"><img src="/images/heart.png" onmouseover="this.src='/images/full_heart.png'"
                         onmouseout="this.src='/images/heart.png'"></a>
                     </div>
                   </div>
@@ -273,11 +273,10 @@
     <script src="/js/home/plugins.js"></script>
     <script src="/js/home/main.js"></script>
     <script>
-      function btn(){ 
-        searchInput = document.getElementById('searchInput');
-        searchInput.value = ""
-        alert('검색 버튼이 클릭되었습니다'); 
-
+      function move(){ 
+        let art_select = document.getElementById('art_select').value;
+        let major_select = document.getElementById('major_select').value;
+        location.href ="/art?art_select="+ art_select +"&major_select="+ major_select; 
       }
     </script>
   </body>

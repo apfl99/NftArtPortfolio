@@ -30,30 +30,42 @@ const output = {
         res.render("home/register");
     },
     artDetail : (req,res) => {
-        // 작품 Id
-        const artId = req.query.viewId;
-        //조회수 처리
-        const query1 = "UPDATE NFT.art SET view_count = view_count +1 where art_id=?;"
-        db.query(query1,[artId], (err,rows) => {
+        const likeId = req.query.likeId;
+        const viewId = req.query.viewId;
+        var artId = 0;
+
+        if(likeId == undefined){
+            const viewId1 = parseInt(viewId);
+            view_count(viewId1,res);
+            artId = viewId1;
+        } else {
+            const likeId1 = parseInt(likeId);
+            view_count(likeId1,res);
+            like_count(likeId1);
+            artId = likeId1;
+        }
+
+        // 뷰
+        const query2 = "SELECT art.*, login_designer.username FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId where art.art_id=?;";
+        db.query(query2, [artId], (err,rows) => {
             if(err) {
                 console.error("query error" + err);
                 res.status(500).send("Internal Server Error");
             } else {
-                // 뷰
-                const query2 = "SELECT art.*, login_designer.username FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId where art.art_id=?;";
-                db.query(query2, [artId], (err,rows) => {
-                    if(err) {
-                        console.error("query error" + err);
-                        res.status(500).send("Internal Sever Error");
-                    } else {
-                        res.render("home/art_detail",{row : rows[0]});
-                    }
-                })
+                res.render("home/art_detail",{row : rows[0]});
             }
         })
     },
     art : (req,res) => {
-        const query = "SELECT art.*, login_designer.username FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId ORDER BY art.art_id;";
+        //좋아요 함수
+         const likeId = req.query.likeId;
+         like_count(likeId);
+
+        //정렬 쿼리문 정의
+        const major_select = req.query.major_select;
+        const art_select = req.query.art_select;
+        const query = art_sorting(major_select,art_select);
+
         db.query(query,(err,rows) => {
             if(err) {
                 console.error("query error" + err);
@@ -155,6 +167,84 @@ const process = {
 
 };
 
+// 좋아요 DB 적용 함수
+function like_count(likeId) {
+    if(likeId == undefined) {
+
+    } else {
+        const like_query = "UPDATE NFT.art SET art.like = art.like+1 where art_id=?;"
+        db.query(like_query,[likeId],(err,rows)=> {
+            if(err){
+               console.error("query error" + err);
+               res.status(500).send("Internal Sever Error");
+            }
+        })
+    }
+}
+
+//정렬 쿼리문 정의 함수
+function art_sorting(major_select,art_select) {
+
+         //정렬
+         var query="SELECT art.*, login_designer.username, login_designer.major FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId ";
+         var query1="";
+         var query2="";
+ 
+         //정렬에 따라 sql문 정의
+         if(art_select === "가장 많이 본 작품"){
+             query2 = "ORDER BY art.view_count DESC;";
+         } else if(art_select === "인기있는 작품") {
+             query2 = "ORDER BY art.like DESC;";
+         } else if(art_select === "최근 작품") {
+             query2 = "ORDER BY date_1 DESC;";
+         } else {
+             query2 = "ORDER BY art.art_id DESC;";
+         }
+ 
+         if(major_select === "커뮤니케이션디자인전공") {
+             query1="where login_designer.major = 커뮤니케이션디자인전공 ";
+         } else if(major_select === "텍스타일디자인전공") {
+             query1="where login_designer.major = 텍스타일디자인전공 ";
+         } else if(major_select === "세라믹디자인전공") {
+             query1="where login_designer.major = 세라믹디자인전공 ";
+         } else if(major_select === "AR·VR미디어디자인전공") {
+             query1="where login_designer.major = AR·VR미디어디자인전공 ";
+         } else if(major_select === "패션디자인전공") {
+             query1="where login_designer.major = 패션디자인전공 ";
+         } else if(major_select === "인더스트리얼디자인전공") {
+             query1="where login_designer.major = 인더스트리얼디자인전공 ";
+         } else if(major_select === "영화영상전공") {
+             query1="where login_designer.major = 영화영상전공 ";
+         } else if(major_select === "연극전공") {
+             query1="where login_designer.major = 연극전공 ";
+         } else if(major_select === "무대미술전공") {
+             query1="where login_designer.major = 무대미술전공 ";
+         } else if(major_select === "사진영상미디어전공") {
+             query1="where login_designer.major = 사진영상미디어전공 ";
+         } else if(major_select === "디지털만화영상전공") {
+             query1="where login_designer.major = 디지털만화영상전공 ";
+         } else if(major_select === "문화예술경영전공") {
+             query1="where login_designer.major = 문화예술경영전공 ";
+         } else if(major_select === "디지털콘텐츠전공") {
+             query1="where login_designer.major = 디지털콘텐츠전공 ";
+         } else {
+         }
+ 
+         //SQL문 완성
+         query += query1;
+         query += query2;
+         return query;
+}
+
+function view_count(art_id, res) {
+    const view_query = "UPDATE NFT.art SET view_count = view_count +1 where art_id=?;"
+        db.query(view_query,[art_id],(err,rows)=> {
+            if(err){
+               console.error("query error" + err);
+               res.status(500).send("Internal Sever Error");
+            }
+        })
+}
 
 
 module.exports = {
