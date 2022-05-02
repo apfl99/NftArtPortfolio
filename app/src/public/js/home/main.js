@@ -7,6 +7,11 @@ $(document).ready(function() {
         $('#Logout').show();
         $('#MyPage').show();
     }
+    else {
+        $('#Login').show();
+        $('#Logout').hide();
+        $('#MyPage').hide();
+    }
 });
 
 /* ---------------------------------------------- /*
