@@ -33,6 +33,17 @@ class UserStorage {
             });
         });
     };
+
+
+    static async art_save1(artInfo1,ipfsVal) {
+        return new Promise((resolve, reject) => {
+            const query3 = "update NFT.login_designer set login_designer.ipfs_link2= ? , login_designer.major = ?, login_designer.birth = ?, login_designer.comment = ? where userId=? ";
+            db.query(query3, [ipfsVal.ipfsUrl, artInfo1.major, artInfo1.birth, artInfo1.personalDescription, artInfo1.userId], (err) => {
+                if(err) reject(`${err}`);
+                resolve({success: true});
+            });
+        });
+    };
 }  
 
 

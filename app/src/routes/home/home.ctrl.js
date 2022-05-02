@@ -37,7 +37,7 @@ const output = {
         db.query(query1,[artId], (err,rows) => {
             if(err) {
                 console.error("query error" + err);
-                res.status(500).send("Internal Sever Error");
+                res.status(500).send("Internal Server Error");
             } else {
                 // 뷰
                 const query2 = "SELECT art.*, login_designer.username FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId where art.art_id=?;";
@@ -138,7 +138,7 @@ const process = {
         url += '?filename=';
         url += (req.file.originalname);
         var ipfsUrl =  encodeURI(url);
-
+        
 
         //넘겨줄 ipfs값들(url,cid)
         var ipfsResultVal = {

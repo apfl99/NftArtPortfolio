@@ -51,6 +51,16 @@ class User {
 
     }
 
-}
+    async personal_info() {
+        try {
+            const artInfo1 = this.body;
+            const ipfsVal = this.ipfsVal;
+            const response = await UserStorage.art_save1(artInfo1,ipfsVal);
+            return response;
+        } catch(err) {
+            return { success: false, msg:"DB 에러"};
+        }
 
+    }
+}
 module.exports = User;  

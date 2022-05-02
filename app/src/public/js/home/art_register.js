@@ -21,7 +21,7 @@ function art_register(e) {
         formData.append("artDescription",artDescription.value);
         formData.append("files", files.files[0]);
         formData.append("userId",window.sessionStorage.getItem('userId'));
-
+        
         //프론트 -> 서버(form 형식)
         fetch("/artRegister", {
                 method: 'POST',
