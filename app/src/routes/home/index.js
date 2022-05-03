@@ -30,6 +30,7 @@ router.post('/login', ctrl.process.login);
 router.post('/register',ctrl.process.register);
 router.post('/artRegister',upload.single("files"),ctrl.process.artRegister);
 router.post('/personalinfoModification',upload.single("filed"),ctrl.process.personalinfoModification);
+router.post('/author_portfolio_nft',ctrl.process.authorPortfolio_nft);
 
 
 

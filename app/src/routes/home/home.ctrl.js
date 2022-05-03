@@ -71,15 +71,48 @@ const output = {
                 console.error("query error" + err);
                 res.status(500).send("Internal Sever Error");
             } else {
+                console.log(rows);
                 res.render("home/art",{rows: rows});
             }
         })
     },    
     authorPortfolio : (req,res) => {
-        res.render("home/author_portfolio");
+        const UserName = req.query.user; 
+        // 뷰
+        const query = "SELECT art.*, login_designer.* FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId where login_designer.username=? ORDER BY art.like DESC;";
+        db.query(query, [UserName], (err,rows) => {
+            if(err) {
+                console.error("query error" + err);
+                res.status(500).send("Internal Server Error");
+            } else {
+                console.log(rows);
+                // 전체 조회수
+                var view_sum = 0;
+                for(let row of rows) {
+                    view_sum += row.view_count;
+                }
+                res.render("home/author_portfolio",{rows : rows, view_sum: view_sum});
+            }
+        })
     },
-    authorPortfolio_nft : (req,res) => {
-        res.render("home/author_portfolio_nft");
+    authorPortfolio_nft: async (req,res) => {
+        const UserName = req.query.user; 
+        // 뷰
+        const query = "SELECT art.*, login_designer.* FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId where login_designer.username=? ORDER BY art.like DESC;";
+        db.query(query, [UserName], (err,rows) => {
+            if(err) {
+                console.error("query error" + err);
+                res.status(500).send("Internal Server Error");
+            } else {
+                console.log(rows);
+                // 전체 조회수
+                var view_sum = 0;
+                for(let row of rows) {
+                    view_sum += row.view_count;
+                }
+                res.render("home/author_portfolio_nft",{rows : rows, view_sum: view_sum});
+            }
+        })
     },
     authors : (req,res) => {
         res.render("home/authors");
@@ -91,7 +124,31 @@ const output = {
         res.render("home/404");
     },    
     generateNFT : (req,res) => {
-        res.render("home/generateNFT");
+        const likeId = req.query.likeId;
+        const viewId = req.query.viewId;
+        var artId = 0;
+
+        if(likeId == undefined){
+            const viewId1 = parseInt(viewId);
+            view_count(viewId1,res);
+            artId = viewId1;
+        } else {
+            const likeId1 = parseInt(likeId);
+            view_count(likeId1,res);
+            like_count(likeId1);
+            artId = likeId1;
+        }
+
+        // 뷰
+        const query2 = "SELECT art.*, login_designer.username FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId where art.art_id=?;";
+        db.query(query2, [artId], (err,rows) => {
+            if(err) {
+                console.error("query error" + err);
+                res.status(500).send("Internal Server Error");
+            } else {
+                res.render("home/generateNFT",{row : rows[0]});
+            }
+        })
     },    
 };
 
@@ -163,7 +220,18 @@ const process = {
         const response = await user.personal_info();
         return res.json(response);
         
-    }
+    },
+
+    authorPortfolio_nft: async (req,res) => { 
+    console.log(req.body.LoginId);
+    //DB
+      const user = new User(req.body.LoginId);
+      const response = await user.author_portfolio_nft();
+      console.log(response);
+      return res.json(response);
+    },
+
+
 
 };
 
@@ -186,7 +254,7 @@ function like_count(likeId) {
 function art_sorting(major_select,art_select) {
 
          //정렬
-         var query="SELECT art.*, login_designer.username, login_designer.major FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId ";
+         var query="SELECT art.*, login_designer.* FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId ";
          var query1="";
          var query2="";
  

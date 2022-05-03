@@ -24,7 +24,7 @@ class User {
     
             return { success: false, msg: "존재하지 않는 아이디입니다." };
         } catch (err) {
-            return { seuccess: false, err };
+            return { success: false, err };
         }
 
     }
@@ -60,7 +60,20 @@ class User {
         } catch(err) {
             return { success: false, msg:"DB 에러"};
         }
+    }
+
+    async author_portfolio_nft() {
+        const body = this.body;
+        console.log(typeof(body));
+        try {
+            const data = await UserStorage.authorPortfolio_nft(body);
+            return {success: true, data};
+        } catch (err) {
+            return { success: false, err };
+        }
 
     }
+
+
 }
 module.exports = User;  

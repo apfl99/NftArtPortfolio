@@ -44,6 +44,17 @@ class UserStorage {
             });
         });
     };
+
+    static authorPortfolio_nft(id) {
+        return new Promise((resolve, reject) => {
+            const query = "SELECT * FROM NFT.login_designer WHERE userId = ?;";
+            db.query(query, [id], (err,data) => {
+                if(err) reject(`${err}`);
+                resolve(data[0]);
+            });
+        });
+    };
+
 }  
 
 

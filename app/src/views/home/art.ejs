@@ -92,7 +92,7 @@
                         <i class="searchButton fa fa-search" onclick="javascript:btn()"></i>
               </li>
               <li id="Login"><a href="/login">Login</a></li>
-              <li style="display:none" id="MyPage" ><a href="/author_portfolio">MyPage</a></li>
+              <li style="display:none" id="MyPage"><a>MyPage</a></li>
               <li style="display:none" id="Logout" ><a>Logout</a></li>
             </ul>
           </div>
@@ -162,8 +162,8 @@
                 <div class="shop-item-info">
                   <div style="float:left; width:85%">
                     <h4 class="shop-item-title font-alt"><%=row.art_name%></h4>
-                    <a href="/author_portfolio" class="user txt_bold txt_dark in_block">
-                      <img class="profile_img" src="assets/images/shop/product-7.jpg" alt="profile image">
+                    <a href="/author_portfolio?user=<%=row.username%>" class="user txt_bold txt_dark in_block">
+                      <img class="profile_img" src="<%=row.ipfs_link2%>">
                       <span><%=row.username%></span>
                     </a>
                   </div>

@@ -7,11 +7,6 @@ $(document).ready(function() {
         $('#Logout').show();
         $('#MyPage').show();
     }
-    else {
-        $('#Login').show();
-        $('#Logout').hide();
-        $('#MyPage').hide();
-    }
 });
 
 /* ---------------------------------------------- /*
@@ -41,6 +36,39 @@ NFTBtn.addEventListener("click", function() {
         location.href='/login';
     }
 });
+
+/* ---------------------------------------------- /*
+ * MyPage
+ /* ---------------------------------------------- */
+ const MyPageBtn = document.querySelector('#MyPage');
+
+ MyPageBtn.addEventListener("click",function(){
+    const LoginId = window.sessionStorage.getItem('userId');
+    const req = {
+        LoginId: LoginId,
+    };
+
+    //프론트 -> 서버
+    fetch("/author_portfolio_nft", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req), // 문자열로 바꿔주지만 body-parser를 통해 파싱되므로 객체 형태로 다시 전달받게 됨
+    })
+    .then((res) => res.json())
+    .then((res) => {
+        if (res.success) {            
+            location.href = "/author_portfolio_nft?user=" + res.data.username;
+        } else {
+            if (res.err) return alert(res.err); // 실제로는 err 값이 알림창으로 나오면 안 됨
+            alert(res.msg);
+        }
+    })
+    .catch((err) => {
+        console.error(new Error("로그인 중 에러가 발생하였습니다."));
+    });
+ })
 
 /* ---------------------------------------------- /*
  * PopUp
