@@ -32,7 +32,7 @@ function personal_info(e) {
         .then((res) => {
             if (res.success) {
                 alert('개인 정보 수정 완료');
-                location.href='/author_portfolio';
+                location.href='/author_portfolio_nft?user=apfl99';
             } else {
                 alert(res.msg);
             }
