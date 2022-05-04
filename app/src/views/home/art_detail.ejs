@@ -103,7 +103,7 @@
                             <i class="searchButton fa fa-search" onclick="javascript:btn()"></i>
                   </li>
                   <li id="Login"><a href="/login">Login</a></li>
-                  <li style="display:none" id="MyPage"><a>MyPage</a></li>
+                  <li style="display:none" id="MyPage" ><a href="/author_portfolio">MyPage</a></li>
                   <li style="display:none" id="Logout" ><a>Logout</a></li>
             </ul>
           </div>
@@ -255,77 +255,38 @@
               </div>
             </div>
             <div class="row multi-columns-row">
-              <div class="col-sm-6 col-md-3 col-lg-3">
+               <% for(var i = 0 ; i<data.length; i++) { %>
+                  <% if(i < 4) { %>
+               <div class="col-sm-6 col-md-3 col-lg-3">
                 <div class="shop-item">
-                  <div class="shop-item-image"><img src="assets/images/shop/product-11.jpg" alt="Accessories Pack"/>
-                    <div class="shop-item-detail"><a class="btn btn-round btn-b" href="/art_detail"><span class="icon-basket">작품 상세보기</span></a></div>
+                  <div class="shop-item-image"><img src='<%=data[i].ipfs_link%>' style="width:fit-content; height:250px;"/>
+                    <div class="shop-item-detail"><a class="btn btn-round btn-b" href="/art_detail?viewId=<%=data[i].art_id%>">작품 상세보기</a></div>
                   </div>
-                  <h4 class="shop-item-title font-alt"><a href="#">Accessories Pack</a></h4>£9.00
+                  <h4 class="shop-item-title font-alt"><a href="#"><%=data[i].art_name%></a></h4>
                 </div>
               </div>
-              <div class="col-sm-6 col-md-3 col-lg-3">
-                <div class="shop-item">
-                  <div class="shop-item-image"><img src="assets/images/shop/product-12.jpg" alt="Men’s Casual Pack"/>
-                    <div class="shop-item-detail"><a class="btn btn-round btn-b" href="shop_single_product.html"><span class="icon-basket">작품 상세보기</span></a></div>
+              <% if(i==3) { %>
+                <div class="row multi-columns-row" id="more">
+              <% }%>
+              <% } else {%>              
+                <div class="col-sm-6 col-md-3 col-lg-3">
+                  <div class="shop-item">
+                    <div class="shop-item-image"><img src='<%=data[i].ipfs_link%>'style="width:fit-content; height:250px;"/>
+                      <div class="shop-item-detail"><a class="btn btn-round btn-b" href="/art_detail?viewId=<%=data[i].art_id%>">작품 상세보기</a></div>
+                    </div>
+                    <h4 class="shop-item-title font-alt"><a href="#"><%=data[i].art_name%></a></h4>
                   </div>
-                  <h4 class="shop-item-title font-alt"><a href="#">Men’s Casual Pack</a></h4>£12.00
                 </div>
-              </div>
-              <div class="col-sm-6 col-md-3 col-lg-3">
-                <div class="shop-item">
-                  <div class="shop-item-image"><img src="assets/images/shop/product-13.jpg" alt="Men’s Garb"/>
-                    <div class="shop-item-detail"><a class="btn btn-ro`und btn-b" href="shop_single_product.html"><span class="icon-basket">작품 상세보기</span></a></div>
-                  </div>
-                  <h4 class="shop-item-title font-alt"><a href="#">Men’s Garb</a></h4>£6.00
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-3 col-lg-3">
-                <div class="shop-item">
-                  <div class="shop-item-image"><img src="assets/images/shop/product-14.jpg" alt="Cold Garb"/>
-                    <div class="shop-item-detail"><a class="btn btn-round btn-b" href="shop_single_product.html"><span class="icon-basket">작품 상세보기</span></a></div>
-                  </div>
-                  <h4 class="shop-item-title font-alt"><a href="#">Cold Garb</a></h4>£14.00
-                </div>
-              </div>
+              <% } %>
+
+              <% } %>
             </div>
-            <!--더보기-->
-            <div class="row multi-columns-row" id="more">
-              <div class="col-sm-6 col-md-3 col-lg-3">
-                <div class="shop-item">
-                  <div class="shop-item-image"><img src="assets/images/shop/product-11.jpg" alt="Accessories Pack"/>
-                    <div class="shop-item-detail"><a class="btn btn-round btn-b" href="shop_single_product.html"><span class="icon-basket">작품 상세보기</span></a></div>
-                  </div>
-                  <h4 class="shop-item-title font-alt"><a href="#">Accessories Pack</a></h4>£9.00
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-3 col-lg-3">
-                <div class="shop-item">
-                  <div class="shop-item-image"><img src="assets/images/shop/product-12.jpg" alt="Men’s Casual Pack"/>
-                    <div class="shop-item-detail"><a class="btn btn-round btn-b" href="shop_single_product.html"><span class="icon-basket">작품 상세보기</span></a></div>
-                  </div>
-                  <h4 class="shop-item-title font-alt"><a href="#">Men’s Casual Pack</a></h4>£12.00
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-3 col-lg-3">
-                <div class="shop-item">
-                  <div class="shop-item-image"><img src="assets/images/shop/product-13.jpg" alt="Men’s Garb"/>
-                    <div class="shop-item-detail"><a class="btn btn-round btn-b" href="shop_single_product.html"><span class="icon-basket">작품 상세보기</span></a></div>
-                  </div>
-                  <h4 class="shop-item-title font-alt"><a href="#">Men’s Garb</a></h4>£6.00
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-3 col-lg-3">
-                <div class="shop-item">
-                  <div class="shop-item-image"><img src="assets/images/shop/product-14.jpg" alt="Cold Garb"/>
-                    <div class="shop-item-detail"><a class="btn btn-round btn-b" href="shop_single_product.html"><span class="icon-basket">작품 상세보기</span></a></div>
-                  </div>
-                  <h4 class="shop-item-title font-alt"><a href="#">Cold Garb</a></h4>£14.00
-                </div>
-              </div>
             </div>
-            <div style="float:right;">
-              <button class="btn btn-d btn-circle" type="submit" onclick="view()" id="myBtn">더보기<i class="fa fa-plus"></i></button>
-            </div>
+            <% if(data.length > 4) { %>  
+              <div style="float:right;">
+                <button class="btn btn-d btn-circle" type="submit" onclick="view()" id="myBtn">더보기<i class="fa fa-plus"></i></button>
+              </div> 
+            <% } %>
           </div>
         </section>
         <div class="module-small bg-dark">
@@ -422,6 +383,7 @@
     <script src="/js/home/main.js"></script>
     <script>
       function view() {
+        
         var moreImg = document.getElementById("more");
         var btnText = document.getElementById("myBtn");
        

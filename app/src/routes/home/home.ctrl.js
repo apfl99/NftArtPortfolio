@@ -50,9 +50,21 @@ const output = {
         db.query(query2, [artId], (err,rows) => {
             if(err) {
                 console.error("query error" + err);
-                res.status(500).send("Internal Server Error");
+                res.status(500).send("Internal Sever Error");
             } else {
-                res.render("home/art_detail",{row : rows[0]});
+                // console.log(rows[0].author_id);
+                const query3 = "SELECT art.*, login_designer.username FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId where author_id=?;";
+                db.query(query3, [rows[0].author_id], (err,data) => {
+                    if(err){
+                        console.error("query error" + err);
+                        res.status(500).send("Internal Sever Error");
+                    } else {
+                        console.log(rows);
+                        console.log('---------------------------------------------------------');
+                        console.log(data);
+                        res.render("home/art_detail",{row : rows[0], data : data});
+                    }
+                })   
             }
         })
     },
@@ -144,9 +156,21 @@ const output = {
         db.query(query2, [artId], (err,rows) => {
             if(err) {
                 console.error("query error" + err);
-                res.status(500).send("Internal Server Error");
+                res.status(500).send("Internal Sever Error");
             } else {
-                res.render("home/generateNFT",{row : rows[0]});
+                // console.log(rows[0].author_id);
+                const query3 = "SELECT art.*, login_designer.username FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId where author_id=?;";
+                db.query(query3, [rows[0].author_id], (err,data) => {
+                    if(err){
+                        console.error("query error" + err);
+                        res.status(500).send("Internal Sever Error");
+                    } else {
+                        console.log(rows);
+                        console.log('---------------------------------------------------------');
+                        console.log(data);
+                        res.render("home/generateNFT",{row : rows[0], data : data});
+                    }
+                })   
             }
         })
     },    
