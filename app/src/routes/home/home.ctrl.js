@@ -380,7 +380,7 @@ async function mintAT_NFT(ArtName,Author,CID,Date,Link,privateKey) {
         console.log('발행되지 않은 토큰입니다.');
     }
 
-    /*
+    
     const total = await atContract.methods.totalSupply().call();
     console.log(total);
 
@@ -423,7 +423,7 @@ async function mintAT_NFT(ArtName,Author,CID,Date,Link,privateKey) {
             console.log(hash);
         }
     })
-    .on('receipt', console.log);*/
+    .on('receipt', console.log);
 
 
 }
