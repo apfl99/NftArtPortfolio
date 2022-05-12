@@ -33,6 +33,8 @@ const atContract = new web3.eth.Contract(DEPLOYED_ABI,DEPLOYED_ADDRESS);
 const Tx = require('ethereumjs-tx').Transaction;
 
 
+
+
 const output = {
     root : (req,res) => {
         res.render('home/home');
@@ -66,16 +68,12 @@ const output = {
                 console.error("query error" + err);
                 res.status(500).send("Internal Sever Error");
             } else {
-                // console.log(rows[0].author_id);
                 const query3 = "SELECT art.*, login_designer.username FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId where author_id=?;";
                 db.query(query3, [rows[0].author_id], (err,data) => {
                     if(err){
                         console.error("query error" + err);
                         res.status(500).send("Internal Sever Error");
                     } else {
-                        console.log(rows);
-                        console.log('---------------------------------------------------------');
-                        console.log(data);
                         res.render("home/art_detail",{row : rows[0], data : data});
                     }
                 })   
@@ -97,7 +95,6 @@ const output = {
                 console.error("query error" + err);
                 res.status(500).send("Internal Sever Error");
             } else {
-                console.log(rows);
                 res.render("home/art",{rows: rows});
             }
         })
@@ -111,7 +108,6 @@ const output = {
                 console.error("query error" + err);
                 res.status(500).send("Internal Server Error");
             } else {
-                console.log(rows);
                 // 전체 조회수
                 var view_sum = 0;
                 for(let row of rows) {
@@ -130,13 +126,15 @@ const output = {
                 console.error("query error" + err);
                 res.status(500).send("Internal Server Error");
             } else {
-                console.log(rows);
+                const query1 = "select author_record.*, login_designer.* FROM author_record LEFT JOIN login_designer ON author_record.author_id_r = login_designer.userId where login_designer.username=?;"
+                db.query(query1, [UserName], (err,datas) => {
                 // 전체 조회수
                 var view_sum = 0;
                 for(let row of rows) {
                     view_sum += row.view_count;
                 }
-                res.render("home/author_portfolio_nft",{rows : rows, view_sum: view_sum});
+                res.render("home/author_portfolio_nft",{rows : rows, view_sum: view_sum, datas: datas});
+                })
             }
         })
     },
@@ -172,7 +170,6 @@ const output = {
                 console.error("query error" + err);
                 res.status(500).send("Internal Sever Error");
             } else {
-                // console.log(rows[0].author_id);
                 const query3 = "SELECT art.*, login_designer.username FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId where author_id=?;";
                 db.query(query3, [rows[0].author_id], (err,data) => {
                     if(err){
@@ -258,7 +255,6 @@ const process = {
     },
 
     authorPortfolio_nft: async (req,res) => { 
-    console.log(req.body.LoginId);
     //DB
       const user = new User(req.body.LoginId);
       const response = await user.author_portfolio_nft();
@@ -269,14 +265,38 @@ const process = {
         const pk = req.body.pk;
 
         const query = "SELECT * FROM NFT.art WHERE art_id = ?;";
-        db.query(query, [artId], (err,data) => {
+        await db.query(query, [artId],  async (err,data) => {
             if(err) {
                 console.error("query error" + err);
                 res.status(500).send("Internal Sever Error");
             } else {
-                mintAT_data(data[0],pk);
+                var response = await mintAT_data(data[0],pk);
+                if(response.success) {
+                    //NFT 발행 완료시 토큰 여부 저장
+                    const query1 = 'update NFT.art set isNFT = 1 where art_id = ?;';
+                    db.query(query1, [artId],  async (err) => {
+                        if(err){
+                            console.error("query error" + err);
+                            res.status(500).send("Internal Sever Error");
+                        }
+                        else {
+                            return res.json(response);
+                        }
+                    })
+                } else {
+                    return res.json(response);
+                }
             }
         });
+        
+    },
+    recordRegister: async (req,res) => {
+        const body = req.body;
+
+        //DB
+        const user = new User(body);
+        const response = await user.record_register();
+        return res.json(response);
     },
 
 };
@@ -368,62 +388,73 @@ async function mintAT_data(data,privateKey) {
     var Date = data.date_1;
     var privateKey = privateKey;
 
-    await mintAT_NFT(artName,author,CID,Date,Link,privateKey);
+    var res = await mintAT_NFT(artName,author,CID,Date,Link,privateKey);
+    return res;
 }
 
 async function mintAT_NFT(ArtName,Author,CID,Date,Link,privateKey) {
 
     var result = await isTokenAlreadyCreated(CID);
     if(result){
-        console.log('이미 발행된 토큰입니다.');
+        //이미 발행된 토큰
+        return { success: false, msg:"이미 발행된 토큰입니다."};
     }else {
-        console.log('발행되지 않은 토큰입니다.');
+        const total = await atContract.methods.totalSupply().call();
+        console.log(total);
+    
+        //GAS비 절약을 위한 해쉬화
+        const metaData = getERC721MetadataSchema(CID,ArtName,Link);
+        var res = await ipfs.add(Buffer.from(JSON.stringify(metaData))); //ipfs에 파일 업로드 후 해쉬 값을 저장 -> 해쉬 값을 통해 용량 및 가스비 절감
+    
+        
+        //발행 계정 정보 address, privateKey, signTransaction, sign, encrypt
+        var Account_info;
+        try{
+            Account_info = await web3.eth.accounts.privateKeyToAccount(privateKey);
+        } catch {
+            return { success: false, msg:"유효하지 않은 계정입니다."};
+        }
+        
+        //SignTX를 위한 Buffer형태로 변환
+        const privateKey_B = Buffer.from(privateKey,'hex');
+
+        //트랜잭션 서명 전에 해당 계정의 잔고가 얼마있는지 조회
+        var balance = await web3.eth.getBalance(Account_info.address);
+        
+        if(balance < 307200000000) {
+            return { success: false, msg:"계정 잔고 부족"};
+        } else {
+            //컨트랙에서 넌스값 구하기
+            const accountNonce = '0x' + (await web3.eth.getTransactionCount(Account_info.address)).toString(16); //DEPLOYED_ADDRESS
+        
+            //트랜잭션 서명 및 보내기    
+            const rawTx =
+            {
+                nonce: accountNonce,
+                from: Account_info.address,
+                to: DEPLOYED_ADDRESS, 
+                gasPrice: 307200000000,
+                gasLimit: 500000,
+                value: '0x0',
+                data: atContract.methods.mintAT(Account_info.address,CID,ArtName, Author, Date, "https://infura-ipfs.io/ipfs/"+res[0].hash).encodeABI()
+            };
+            
+            const tx = new Tx(rawTx, { 'chain': 'ropsten' });
+            tx.sign(privateKey_B);
+            
+            var serializedTx = '0x' + tx.serialize().toString('hex');
+            try {
+                await web3.eth.sendSignedTransaction(serializedTx.toString('hex'), function (err, hash) {console.log(hash)}).on('receipt', console.log);
+                return { success: true, msg: 'NFT 발행 성공'};
+            } catch {
+                return { success: false, msg: 'NFT 발행 실패'};
+            }
+            
+        }
     }
 
     
-    const total = await atContract.methods.totalSupply().call();
-    console.log(total);
 
-    //GAS비 절약을 위한 해쉬화
-    const metaData = getERC721MetadataSchema(CID,ArtName,Link);
-    var res = await ipfs.add(Buffer.from(JSON.stringify(metaData))); //ipfs에 파일 업로드 후 해쉬 값을 저장 -> 해쉬 값을 통해 용량 및 가스비 절감
-
-    
-    //발행 계정 정보 address, privateKey, signTransaction, sign, encrypt
-    const Account_info = await web3.eth.accounts.privateKeyToAccount(privateKey);
-    
-    //SignTX를 위한 Buffer형태로 변환
-    const privateKey_B = Buffer.from(privateKey,'hex');
-    
-    //컨트랙에서 넌스값 구하기
-    const accountNonce = '0x' + (await web3.eth.getTransactionCount(Account_info.address)).toString(16); //DEPLOYED_ADDRESS
-    console.log(accountNonce);
-
-    //트랜잭션 서명 및 보내기    
-    const rawTx =
-    {
-        nonce: accountNonce,
-        from: Account_info.address,
-        to: DEPLOYED_ADDRESS, 
-        gasPrice: 307200000000, 
-        gasLimit: 500000,
-        value: '0x0',
-        data: atContract.methods.mintAT(Account_info.address,CID,ArtName, Author, Date, "https://infura-ipfs.io/ipfs/"+res[0].hash).encodeABI()
-    };
-    
-    const tx = new Tx(rawTx, { 'chain': 'ropsten' });
-    tx.sign(privateKey_B);
-    
-    var serializedTx = '0x' + tx.serialize().toString('hex');
-    await web3.eth.sendSignedTransaction(serializedTx.toString('hex'), function (err, hash) {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            console.log(hash);
-        }
-    })
-    .on('receipt', console.log);
 
 
 }

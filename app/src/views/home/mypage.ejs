@@ -92,110 +92,149 @@
           </div>
         </section>
         <section class="module" id="contact">
-            <div class="container" style="margin:0px; display:inline-flex; justify-content:center; width:100%;">
-              <div class="row" style="display:flex; width:100%; justify-content:center;">
-                <div class="col-sm-8" style="float: left;">
-                    <h2 class="module-title font-alt">개인 정보 수정</h2>
-                    <form id="personal_info_modification">
-                      <div class="form-group row mb-4">
-                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">작가 프로필 사진</label>
-                        <div class="col-sm-12 col-md-7">
-                          <input type="file" name="filed" id="filed">
+          <div class="row mt-70">
+            <div class="col-sm-12">
+              <ul class="nav nav-tabs font-alt" role="tablist">
+                <li class="active"><a href="#personal_info_modification" data-toggle="tab"><span class="icon-tools-2"></span>개인정보 수정</a></li>
+                <li><a href="#author_record_register" data-toggle="tab"><span class="icon-tools-2"></span>작가 이력 등록</a></li>
+                <li><a href="#art_register" data-toggle="tab"><span class="icon-tools-2"></span>작품 업로드</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="personal_info_modification">
+                  <div class="row" style="display:flex; width:100%; justify-content:center;">
+                    <div class="col-sm-8" style="float: left;">
+                        <h2 class="module-title font-alt">개인 정보 수정</h2>
+                        <form id="personal_info_modification">
+                          <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">작가 프로필 사진</label>
+                            <div class="col-sm-12 col-md-7">
+                              <input type="file" name="filed" id="filed">
+                            </div>
+                          </div>
+                            <div class="form-group row mb-4">
+                              <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">생년월일</label>
+                              <div class="col-sm-12 col-md-7">
+                                  <input type="date" class="form-control" id="birth" name="birth">
+                              </div>
+                            </div>
+    
+                              <div class="form-group row mb-4">
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">전공</label>
+                                <div class="col-sm-12 col-md-7">
+                                  <select class="form-control" id="major" name="major">
+                                    <option selected="selected">전체</option>
+                                    <option>커뮤니케이션디자인전공</option>
+                                    <option>텍스타일디자인전공</option>
+                                    <option>세라믹디자인전공</option>
+                                    <option>AR·VR미디어디자인전공</option>
+                                    <option>패션디자인전공</option>
+                                    <option>스페이스디자인전공</option>
+                                    <option>인더스트리얼디자인전공</option>
+                                    <option>영화영상전공</option>
+                                    <option>연극전공</option>
+                                    <option>무대미술전공</option>
+                                    <option>사진영상미디어전공</option>
+                                    <option>디지털만화영상전공</option>
+                                    <option>문화예술경영전공</option>
+                                    <option>디지털콘텐츠전공</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group row mb-4">
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">하고 싶은 말</label>
+                                <div class="col-sm-12 col-md-7">
+                                    <textarea class="form-control" rows="7" placeholder="" id="personalDescription"></textarea>
+                                </div>
+                              </div>
+                              <div class="form-group row mb-4">
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                                <div class="col-sm-12 col-md-7">
+                                  <button class="btn btn-round btn-b" type="submit">수정</button>
+                                </div>
+                              </div>
+                         </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="author_record_register" >
+                  <div class="comment-form mt-30" style="width:100%; justify-content:center;">
+                    <h2 class="module-title font-alt">작가 이력 등록</h2>
+                    <form id="author_record_form">
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                            <input class="form-control" id="host" name="host" type="text" placeholder="주최기관"/>
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                            <input class="form-control" id="subject" name="subject" placeholder="주제"/>
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                              <input type="date" class="form-control" id="date_p" name="date_p">
+                        </div>
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <textarea class="form-control" id="result" name="result" rows="4" placeholder="결과"></textarea>
+                          </div>
+                        </div>
+                        <div class="col-sm-12">
+                          <button class="btn btn-round btn-d" type="submit">등록</button>
                         </div>
                       </div>
-                        <div class="form-group row mb-4">
-                          <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">생년월일</label>
-                          <div class="col-sm-12 col-md-7">
-                              <input type="date" class="form-control" id="birth" name="birth">
-                          </div>
-                        </div>
-
-                          <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">전공</label>
-                            <div class="col-sm-12 col-md-7">
-                              <select class="form-control" id="major" name="major">
-                                <option selected="selected">전체</option>
-                                <option>커뮤니케이션디자인전공</option>
-                                <option>텍스타일디자인전공</option>
-                                <option>세라믹디자인전공</option>
-                                <option>AR·VR미디어디자인전공</option>
-                                <option>패션디자인전공</option>
-                                <option>스페이스디자인전공</option>
-                                <option>인더스트리얼디자인전공</option>
-                                <option>영화영상전공</option>
-                                <option>연극전공</option>
-                                <option>무대미술전공</option>
-                                <option>사진영상미디어전공</option>
-                                <option>디지털만화영상전공</option>
-                                <option>문화예술경영전공</option>
-                                <option>디지털콘텐츠전공</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">하고 싶은 말</label>
-                            <div class="col-sm-12 col-md-7">
-                                <textarea class="form-control" rows="7" placeholder="" id="personalDescription"></textarea>
-                            </div>
-                          </div>
-                          <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
-                            <div class="col-sm-12 col-md-7">
-                              <button class="btn btn-round btn-b" type="submit">등록</button>
-                              <!-- <input type="button" id="target" value="button"></input> -->
-                            </div>
-                          </div>
-                     </form>
-
-                  <!-- <div class="ajax-response font-alt" id="contactFormResponse"></div> -->
-                </div>
-              </div>
-              
-              <div class="row" style="display:flex; width:100%; justify-content:center;">
-                <div class="col-sm-8" style="float: right;">
-                    <h2 class="module-title font-alt">작품 업로드</h2>
-                  <form id="art_register_form">
-                        <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">작품 업로드</label>
-                            <div class="col-sm-12 col-md-7">
-                              <input type="file" id="files" name="files">
-                            </div>
-                          </div>
-                          <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">작품명</label>
-                            <div class="col-sm-12 col-md-7">
-                              <input type="text" class="form-control" id="artName">
-                            </div>
-                          </div>
-                          <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">작품 유형</label>
-                            <div class="col-sm-12 col-md-7">
-                              <select class="form-control" id="artCategory">
-                                <option selected="selected">전체</option>
-                                <option>Image</option>
-                                <option>Video</option>
-                                <option>Document</option>
-                                <option>GIF</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">작품 설명</label>
-                            <div class="col-sm-12 col-md-7">
-                                <textarea class="form-control" id="artDescription" rows="7" placeholder=""></textarea>
-                            </div>
-                          </div>
-                          <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
-                            <div class="col-sm-12 col-md-7">
-                              <button class="btn btn-round btn-b"type="submit">등록</button>
-                            </div>  
-                          </div>
                     </form>
+                  </div>
+                </div>
+                <div class="tab-pane" id="art_register"> 
+                  <div class="row" style="display:flex; width:100%; justify-content:center;">
+                    <div class="col-sm-8" style="float: right;">
+                        <h2 class="module-title font-alt">작품 업로드</h2>
+                      <form id="art_register_form">
+                            <div class="form-group row mb-4">
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">작품 업로드</label>
+                                <div class="col-sm-12 col-md-7">
+                                  <input type="file" id="files" name="files">
+                                </div>
+                              </div>
+                              <div class="form-group row mb-4">
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">작품명</label>
+                                <div class="col-sm-12 col-md-7">
+                                  <input type="text" class="form-control" id="artName">
+                                </div>
+                              </div>
+                              <div class="form-group row mb-4">
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">작품 유형</label>
+                                <div class="col-sm-12 col-md-7">
+                                  <select class="form-control" id="artCategory">
+                                    <option selected="selected">전체</option>
+                                    <option>Image</option>
+                                    <option>Video</option>
+                                    <option>Document</option>
+                                    <option>GIF</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group row mb-4">
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">작품 설명</label>
+                                <div class="col-sm-12 col-md-7">
+                                    <textarea class="form-control" id="artDescription" rows="7" placeholder=""></textarea>
+                                </div>
+                              </div>
+                              <div class="form-group row mb-4">
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                                <div class="col-sm-12 col-md-7">
+                                  <button class="btn btn-round btn-b"type="submit">업로드</button>
+                                </div>  
+                              </div>
+                        </form>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
 
 
@@ -293,6 +332,7 @@
   <script src="/js/home/plugins.js"></script>
   <script src="/js/home/main.js"></script>
   <script src="/js/home/art_register.js"></script>
+  <script src="/js/home/author_record.js"></script>
   <script src="/js/home/Personal_info_modification.js"></script>
 </body>
 </html>

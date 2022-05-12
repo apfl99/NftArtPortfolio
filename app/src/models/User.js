@@ -75,6 +75,17 @@ class User {
 
     }
 
+    async record_register() {
+        try {
+            const recordInfo = this.body;
+            const response = await UserStorage.record_save(recordInfo);
+            return response;
+        } catch(err) {
+            return { success: false, msg:"DB 에러"};
+        }
+
+    }
+
 
 }
 module.exports = User;  

@@ -5,7 +5,7 @@ const formBtn = document.getElementById("art_register_form");
 formBtn.addEventListener("submit",art_register);
 
 function art_register(e) {
-
+        
         e.preventDefault();
 
         const files = document.getElementById('files');

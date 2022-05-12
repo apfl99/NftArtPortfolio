@@ -15,6 +15,8 @@ async function mintAT() {
         artId: artId,
         pk: pk,
     }
+    
+
 
     //프론트 -> 서버
     fetch("/mintAT", {
@@ -27,14 +29,16 @@ async function mintAT() {
     .then((res) => res.json())
     .then((res) => {
         if (res.success) {
-            alert('NFT 발행 성공');
-            
+            $('#loginModal').modal('hide');
+            alert(res.msg);
         } else {
+            $('#loginModal').modal('hide');
             alert(res.msg);
         }
     })
     .catch((err) => {
-        console.error("NFT 발행 중 에러가 발생하였습니다.");
+        $('#loginModal').modal('hide');
+        alert("서버 오류가 발생하였습니다.");
     });
 
 }

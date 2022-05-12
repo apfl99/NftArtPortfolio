@@ -87,7 +87,7 @@
             <div class="row">
               <div class="col-sm-6 col-sm-offset-3">
                 <h2 class="module-title font-alt"><%=rows[0].username%>의 포트폴리오</h2>
-                <div style="margin-right : 10px, margin-bottom 10px;" class="module-subtitle font-serif" OnClick="location.href ='/mypage'"><u>정보 수정</u></div>
+                <div style="margin-right : 10px, margin-bottom 10px;" class="module-subtitle font-serif" OnClick="location.href ='/mypage'"><u>정보 수정 및 작품 업로드</u></div>
              </div>
             </div>
           </div>
@@ -96,41 +96,20 @@
           <div class="container">
             <div class="row">
               <div class="col-sm-4 col-md-3 sidebar">
-                
                 <div class="widget">
                     <h5 class="widget-title font-alt">하고 싶은 말</h5><%=rows[0].comment%>
                     </div>
                 <div class="widget">
                   <h5 class="widget-title font-alt">작가 이력</h5>
                   <ul class="widget-posts">
+                    <% for(let data of datas) { %>
                     <li class="clearfix">
-                      <div class="widget-posts-image"><a href="#"><img src="assets/images/rp-1.jpg" alt="Post Thumbnail"/></a></div>
                       <div class="widget-posts-body">
-                        <div class="widget-posts-title"><a href="#">Designer Desk Essentials</a></div>
-                        <div class="widget-posts-meta">23 january</div>
+                        <div class="widget-posts-title"><%=data.record_host%> <%=data.record_subject%> <%=data.record_result%></div>
+                        <div class="widget-posts-meta"><%=data.record_date.toDateString()%></div>
                       </div>
                     </li>
-                    <li class="clearfix">
-                      <div class="widget-posts-image"><a href="#"><img src="assets/images/rp-2.jpg" alt="Post Thumbnail"/></a></div>
-                      <div class="widget-posts-body">
-                        <div class="widget-posts-title"><a href="#">Realistic Business Card Mockup</a></div>
-                        <div class="widget-posts-meta">15 February</div>
-                      </div>
-                    </li>
-                    <li class="clearfix">
-                      <div class="widget-posts-image"><a href="#"><img src="assets/images/rp-3.jpg" alt="Post Thumbnail"/></a></div>
-                      <div class="widget-posts-body">
-                        <div class="widget-posts-title"><a href="#">Eco bag Mockup</a></div>
-                        <div class="widget-posts-meta">21 February</div>
-                      </div>
-                    </li>
-                    <li class="clearfix">
-                      <div class="widget-posts-image"><a href="#"><img src="assets/images/rp-4.jpg" alt="Post Thumbnail"/></a></div>
-                      <div class="widget-posts-body">
-                        <div class="widget-posts-title"><a href="#">Bottle Mockup</a></div>
-                        <div class="widget-posts-meta">2 March</div>
-                      </div>
-                    </li>
+                    <% } %>
                   </ul>
                 </div>
                 

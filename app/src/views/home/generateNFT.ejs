@@ -116,9 +116,13 @@
                 <div class="col-sm-6" style="float: left; width:50%; text-align:center">
                   <img src='<%=row.ipfs_link%>'>
                 </div>
-                <div class="col-sm-6" style="float: right; width:50%;">
-                    <h1 class="product-title font-alt"><%=row.art_name%></h1>
-                    <a href="/author_portfolio"><u><h5 class="product-title font-alt"><%=row.username%></h5></u></a>
+                <div class="row mb-20" style="float: right; width:50%;">
+                  <%if(row.isNFT == 1){%>
+                    <img class="product-title font-alt" src="/images/nft.png" style="width: 20px; height: 20px; float:left;">
+                  <%}%>
+                  <h1 class="product-title font-alt" style="float: left;"><%=row.art_name%></h1>
+                    <br><br><br>
+                    <a href="/author_portfolio"><u><h5><%=row.username%></h5></u></a>
                   <div class="row mb-20">
                     <div class="col-sm-12"><span><i class="fa fa-star star"></i></span><span><i class="fa fa-star star"></i></span><span><i class="fa fa-star star"></i></span><span><i class="fa fa-star star"></i></span><span><i class="fa fa-star star-off"></i></span><a class="open-tab section-scroll" href="#reviews">-2customer reviews</a>
                     </div>
@@ -406,13 +410,6 @@
     function mintATBtn() {
         $('#loginModal').modal('show');
     }
-      
-      function btn(){ 
-        searchInput = document.getElementById('searchInput');
-        searchInput.value = ""
-        alert('검색 버튼이 클릭되었습니다'); 
-  
-      }
       
     </script>
   </body>

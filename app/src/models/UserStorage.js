@@ -55,6 +55,16 @@ class UserStorage {
         });
     };
 
+    static async record_save(recordInfo) {
+        return new Promise((resolve, reject) => {
+            const query3 = "INSERT INTO NFT.author_record(author_record.author_id_r, author_record.record_host, author_record.record_subject, author_record.record_date, author_record.record_result) VALUES(?, ?, ?, ?, ?);";
+            db.query(query3, [recordInfo.userId,recordInfo.host,recordInfo.subject,recordInfo.date_p,recordInfo.result], (err) => {
+                if(err) reject(`${err}`);
+                resolve({success: true});
+            });
+        });
+    };
+
 }  
 
 
