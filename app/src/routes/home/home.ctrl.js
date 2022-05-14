@@ -330,7 +330,9 @@ function art_sorting(major_select,art_select) {
              query2 = "ORDER BY art.like DESC;";
          } else if(art_select === "최근 작품") {
              query2 = "ORDER BY date_1 DESC;";
-         } else {
+         }  else if(art_select === "NFT 작품") {
+            query2 = "AND art.isNFT = 1;";
+        } else {
              query2 = "ORDER BY art.art_id DESC;";
          }
  
@@ -361,6 +363,7 @@ function art_sorting(major_select,art_select) {
          } else if(major_select === "디지털콘텐츠전공") {
              query1="where login_designer.major = '디지털콘텐츠전공' ";
          } else {
+            query2 = "where art.isNFT = 1;";
          }
  
          //SQL문 완성
