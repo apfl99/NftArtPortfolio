@@ -25,6 +25,7 @@ router.get('/authors',ctrl.output.authors);
 router.get('/mypage',ctrl.output.myPage);
 router.get('/404',ctrl.output.errPage);
 router.get('/generateNFT',ctrl.output.generateNFT);
+router.get('/NFT',ctrl.output.NFT);
 
 router.post('/login', ctrl.process.login);
 router.post('/register',ctrl.process.register);
@@ -33,6 +34,7 @@ router.post('/personalinfoModification',upload.single("filed"),ctrl.process.pers
 router.post('/author_portfolio_nft',ctrl.process.authorPortfolio_nft);
 router.post('/mintAT', ctrl.process.mintAT);
 router.post('/recordRegister', ctrl.process.recordRegister);
+router.post('/NFT',ctrl.process.NFT);
 
 
 

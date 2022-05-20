@@ -32,8 +32,7 @@ const atContract = new web3.eth.Contract(DEPLOYED_ABI,DEPLOYED_ADDRESS);
 
 const Tx = require('ethereumjs-tx').Transaction;
 
-
-
+const request_req = require('request');
 
 const output = {
     root : (req,res) => {
@@ -128,12 +127,26 @@ const output = {
             } else {
                 const query1 = "select author_record.*, login_designer.* FROM author_record LEFT JOIN login_designer ON author_record.author_id_r = login_designer.userId where login_designer.username=?;"
                 db.query(query1, [UserName], (err,datas) => {
-                // 전체 조회수
-                var view_sum = 0;
-                for(let row of rows) {
-                    view_sum += row.view_count;
-                }
-                res.render("home/author_portfolio_nft",{rows : rows, view_sum: view_sum, datas: datas});
+                    if(err) {
+                        console.error("query error" + err);
+                        res.status(500).send("Internal Server Error");
+                    }
+                    else {
+                        const query2 = "SELECT art.*, login_designer.* FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId where login_designer.username= ? AND art.isNFT=1;";
+                        db.query(query2, [UserName], (err,nfts) => {
+                            // 전체 조회수
+                            var view_sum = 0;
+                            for(let row of rows) {
+                                view_sum += row.view_count;
+                            }
+                            //NFT 조회수
+                            var view_sum_nft = 0;
+                            for(let nft of nfts) {
+                                view_sum_nft += nft.view_count;
+                            }
+                            res.render("home/author_portfolio_nft",{rows : rows, view_sum: view_sum, datas: datas, nfts: nfts, view_sum_nft: view_sum_nft});
+                        })
+                    }
                 })
             }
         })
@@ -182,7 +195,11 @@ const output = {
             }
         })
     },    
+    NFT : async (req,res) => {
+        res.render("home/NFT");
+    }
 };
+
 
 const process = {
 
@@ -298,6 +315,10 @@ const process = {
         const response = await user.record_register();
         return res.json(response);
     },
+    NFT: async (req,res) => {
+        const response = await generate_NFT_info(req.body.metaAccount);
+        return res.json(response);
+    },
 
 };
 
@@ -362,8 +383,10 @@ function art_sorting(major_select,art_select) {
              query1="where login_designer.major = '문화예술경영전공' ";
          } else if(major_select === "디지털콘텐츠전공") {
              query1="where login_designer.major = '디지털콘텐츠전공' ";
-         } else {
-            query2 = "where art.isNFT = 1;";
+         } else { //전공 전체일때
+            if(art_select === "NFT 작품") {
+                query2 = "where art.isNFT = 1;";
+            }
          }
  
          //SQL문 완성
@@ -484,9 +507,87 @@ function getERC721MetadataSchema(CID,ArtName,Link) {
   }
 
 
+
+async function generate_NFT_info(address) {
+    //현재 계정의 토큰 개수 리턴
+    var balance = parseInt(await getBalanceOf(address));
+    var index_array = Array.from(Array(balance).keys());
+
+    //토큰 정보 저장
+    
+    var token_infos_array = [];
+
+
+    if (balance === 0) {
+      return {TokenNum: balance};
+    } else {
+      
+      for await (let index of index_array) {
+        var token_infos = {};
+         // 토큰 정보 저장
+         var tokenId = await getTokenOfOwnerByIndex(address, index); // 토큰 ID 반환
+         var tokenUri = await getTokenUri(tokenId); // 토큰 URI 반환
+         var at = await getAT(tokenId); // 토큰 정보(작가, 발행일, 작품명) 반환 from ArtToken.sol
+         var metadata = await getMetadata(tokenUri); // metadata 반환
+         token_infos.ArtName = metadata.properties.description.description;
+         token_infos.ArtLink = metadata.properties.image.description;
+         token_infos_array.push({token_infos});
+      }
+      
+
+    }
+    
+    return {TokenNum: balance, token_info: token_infos_array};
+}
+
+//토큰이 이미 발행되었는지 여부 확인
 async function isTokenAlreadyCreated(CID) {
     return await atContract.methods.isTokenAlreadyCreated(CID).call(); //from YoutubeThumbnailToken.sol
 }
+
+//계정 보유 토큰 수 확인
+async function getBalanceOf(address) {
+    return await atContract.methods.balanceOf(address).call(); //from ERC721
+}
+
+//해당 토큰의 ID 반환
+async function getTokenOfOwnerByIndex (address, index) {
+    return await atContract.methods.tokenOfOwnerByIndex(address, index).call(); //from ERC721Enumerable.sol
+}
+
+//IPFS LINK 반환(JSON)
+async function getTokenUri (tokenId) {
+    return await atContract.methods.tokenURI(tokenId).call(); // from ERC721Metadata.sol
+}
+
+// 작성자, 발행일, link등 정보 반환
+async function getAT (tokenId) {
+    return await atContract.methods.getAT(tokenId).call(); // from ArtToken.sol
+}
+
+//IPFS_link로 json 파일 가져옴
+async function getMetadata (tokenUri) {
+    let options = {json: true};
+
+    return new Promise((resolve) => {
+        request_req(tokenUri, options, async (error, res, body)  => {
+            if (error) {
+                resolve(error);
+            };
+        
+            if (!error && res.statusCode == 200) {
+                resolve(body);
+            };
+        });
+    })
+}
+
+
+
+
+
+
+
 
 
 module.exports = {

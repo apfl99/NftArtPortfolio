@@ -69,7 +69,7 @@
               <li><a href="/" >홈</a>
               <li><a href="/authors">작가</a>
               <li ><a href="/art">작품</a>
-                <li id="NFT"><a>NFT 발행</a></li>
+                <li><a href="/NFT">NFT</a></li>
                 <li class="searchBox">
                   <input id="searchInput" class="searchInput" type="text" name="" placeholder="Search..." value="">
                           <i class="searchButton fa fa-search" onclick="javascript:btn()"></i>
@@ -112,8 +112,6 @@
                     <% } %>
                   </ul>
                 </div>
-                
-                
               </div>
               <div class="col-sm-8 col-sm-offset-1">
                 <div class="post">
@@ -121,6 +119,7 @@
                     <div class="post-header font-alt">
                         <h2 class="post-title"><%=rows[0].username%></a></h2>
                         <div class="post-meta"> <%=rows[0].birth.toDateString()%> </a> <%=rows[0].major%>
+                        
                         </div>
                       </div>
                       <div class="post-entry">
@@ -140,16 +139,17 @@
                
                
                 <div class="post #">
-                    
-                    <div class="post-header font-alt">
-                        <div style="padding: 300px;">  </div>
-                      <div><h2 class="post-title">작품들 </a></h2> </div>
+                  <ul class="nav nav-tabs font-alt" role="tablist">
+                    <li class="active"><a href="#my_art" data-toggle="tab">나의 작품</a></li>
+                    <li><a href="#my_nft" data-toggle="tab">나의 NFT</a></li>
+                  </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="my_art">
+                      <div><h2 class="post-title">작품들</a></h2> </div>
                       <br>
                       <div class="post-meta">By <%=rows[0].username%>| <%=rows[0].date_1.toDateString()%> | 전체 조회수 : <%=view_sum%> | </a><%=rows[0].major%></div>
-                       
-                    </div>
-                    <div class="post-entry"> </div>
                       <section>
+                        <div class="post-entry"> </div>
                         <div class="container">
                           <% for(let row of rows) { %>
                             <div class="col-sm-6 col-md-3 col-lg-3">
@@ -171,9 +171,41 @@
                           <% } %>
                         </div>
                       </section> 
-                    </div>      
-                 </div>
-              </div>
+                    </div>
+                  
+
+                  
+                    <div class="tab-pane active" id="my_nft">
+                      <div><h2 class="post-title">NFT</a></h2> </div>
+                      <br>
+                      <div class="post-meta">By <%=rows[0].username%>| <%=rows[0].date_1.toDateString()%> | 전체 조회수 : <%=view_sum_nft%> | </a><%=rows[0].major%></div>
+                      <section>
+                        <div class="post-entry"> </div>
+                        <div class="container">
+                          <% for(let nft of nfts) { %>
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                              <div class="shop-item" style="margin: 0;">
+                                <div class="shop-item-image"><img src='<%=nft.ipfs_link%>' style="width:fit-content; height:250px;"/>
+                                  <div class="shop-item-detail"><button class="btn btn-d btn-round" type="submit" onclick="location.href='/art_detail?viewId=<%=nft.art_id%>'">작품 상세보기</button> 
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="shop-item-info">
+                                <div style="float:left; width:85%">
+                                  <h4 class="shop-item-title font-alt"><%=nft.art_name%></h4>
+                                </div>
+                                <div style="float:left; width:15%; margin:auto; line-height: 62.88px;">
+                                  <i class="fa fa-heart"></i><span class="like_count">  <%=nft.like%></span>
+                                </div>
+                              </div>
+                            </div>
+                          <% } %>
+                        </div>
+                      </section> 
+                    </div>
+                  </div>
+                  
+
           </div>
         </section>
       
