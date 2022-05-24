@@ -109,6 +109,7 @@
                             <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">작가 프로필 사진</label>
                             <div class="col-sm-12 col-md-7">
                               <input type="file" name="filed" id="filed">
+                              <p class="help-block">File types supported: JPG, PNG, SVG, JPEG. Max size: 100 MB</p>
                             </div>
                           </div>
                             <div class="form-group row mb-4">
@@ -164,19 +165,23 @@
                         <div class="col-sm-4">
                           <div class="form-group">
                             <input class="form-control" id="host" name="host" type="text" placeholder="주최기관"/>
+                            <p class="help-block" id="host-message"></p>
                           </div>
                         </div>
                         <div class="col-sm-4">
                           <div class="form-group">
                             <input class="form-control" id="subject" name="subject" placeholder="주제"/>
+                            <p class="help-block" id="subject-message"></p>
                           </div>
                         </div>
                         <div class="col-sm-4">
                               <input type="date" class="form-control" id="date_p" name="date_p">
+                              <p class="help-block" id="datep-message"></p>
                         </div>
                         <div class="col-sm-12">
                           <div class="form-group">
                             <textarea class="form-control" id="result" name="result" rows="4" placeholder="결과"></textarea>
+                            <p class="help-block" id="result-message"></p>
                           </div>
                         </div>
                         <div class="col-sm-12">
@@ -195,12 +200,15 @@
                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">작품 업로드</label>
                                 <div class="col-sm-12 col-md-7">
                                   <input type="file" id="files" name="files">
+                                  <p class="help-block">File types supported: JPG, PNG, GIF, SVG, JPEG. Max size: 100 MB</p>
+                                  <p class="help-block" id="files-message"></p>
                                 </div>
                               </div>
                               <div class="form-group row mb-4">
                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">작품명</label>
                                 <div class="col-sm-12 col-md-7">
                                   <input type="text" class="form-control" id="artName">
+                                  <p class="help-block" id="artName-message"></p>
                                 </div>
                               </div>
                               <div class="form-group row mb-4">
@@ -209,16 +217,16 @@
                                   <select class="form-control" id="artCategory">
                                     <option selected="selected">전체</option>
                                     <option>Image</option>
-                                    <option>Video</option>
-                                    <option>Document</option>
                                     <option>GIF</option>
                                   </select>
                                 </div>
+                                <p class="help-block" id="artCategory-message"></p>
                               </div>
                               <div class="form-group row mb-4">
                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">작품 설명</label>
                                 <div class="col-sm-12 col-md-7">
                                     <textarea class="form-control" id="artDescription" rows="7" placeholder=""></textarea>
+                                    <p class="help-block" id="artDescription-message"></p>
                                 </div>
                               </div>
                               <div class="form-group row mb-4">
