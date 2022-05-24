@@ -77,7 +77,7 @@ function checkValue(value) {
 //파일 용량 체크
 function fileCheck_size(file) {
 
-    var maxSize = 5 * 1024 * 1024;
+    var maxSize = 100 * 1024 * 1024;
     if(file.size > maxSize){
         alert('파일 용량이 너무 큽니다.');
         return false;
