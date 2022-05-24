@@ -16,6 +16,7 @@ function art_register(e) {
         //폼 데이터 처리
         const formData = new FormData();
 
+        
         formData.append("artName",artName.value);
         formData.append("artCategory",artCategory.value);
         formData.append("artDescription",artDescription.value);

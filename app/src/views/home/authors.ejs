@@ -68,13 +68,13 @@
               <li><a href="/" >홈</a>
               <li><a href="/authors">작가</a>
               <li ><a href="/art">작품</a>
-                <li><a href="/NFT">NFT</a></li>
+                <li id="NFT"><a>NFT 발행</a></li>
                 <li class="searchBox">
                   <input id="searchInput" class="searchInput" type="text" name="" placeholder="Search..." value="">
                           <i class="searchButton fa fa-search" onclick="javascript:btn()"></i>
                 </li>
                 <li id="Login"><a href="/login">Login</a></li>
-                <li style="display:none" id="MyPage"><a>MyPage</a></li>
+                <li style="display:none" id="MyPage" ><a href="/author_portfolio">MyPage</a></li>
                 <li style="display:none" id="Logout" ><a>Logout</a></li>
             </ul>
           </div>
@@ -93,152 +93,44 @@
         </section>
         <section class="module">
           <div class="container">
-            <h2>디자인 대학</h2>
-            <br>
-            <div class="row">
-               
-              <div class="col-sm-12">
-            
-                <ul class="filter font-alt" id="filters">
-
-                    <li><a class="current wow fadeInUp" href="#" data-filter="*">ALL</a></li>
-                    <li><a class="wow fadeInUp" href="#" data-filter=".illustration" data-wow-delay="0.2s">커뮤니케이션디자인전공</a></li>
-                    <li><a class="wow fadeInUp" href="#" data-filter=".illustration" data-wow-delay="0.2s">패션디자인전공</a></li>
-                    <li><a class="wow fadeInUp" href="#" data-filter=".marketing" data-wow-delay="0.4s">텍스타일디자인전공</a></li>
-                    <li><a class="wow fadeInUp" href="#" data-filter=".photography" data-wow-delay="0.6s">스페이스디자인전공</a></li>
-                    <li><a class="wow fadeInUp" href="#" data-filter=".webdesign" data-wow-delay="0.6s">세라믹디자인전공</a></li>
-                    <li><a class="wow fadeInUp" href="#" data-filter=".webdesign" data-wow-delay="0.6s">인더스트리얼디자인전공</a></li>
-                    <li><a class="wow fadeInUp" href="#" data-filter=".webdesign" data-wow-delay="0.6s">AR.VR디자인전공</a></li>
-                   
-                  </ul>
-                </ul>
-              </div>
-            </div>
-            <ul class="works-grid works-grid-gut works-grid-4 works-hover-w" id="works-grid">
-              <li class="work-item illustration webdesign"><a href="/author_portfolio">
-                  <div class="work-image"><img src="assets/images/portfolio/grid-portfolio1.jpg" alt="Portfolio Item"/></div>
-                  <div class="work-caption font-alt">
-                    <h3 class="work-title">Corporate Identity</h3>
-                    <div class="work-descr">Illustration</div>
-                  </div></a></li>
-              <li class="work-item marketing photography"><a href="portfolio_single_featured_image2.html">
-                  <div class="work-image"><img src="assets/images/portfolio/grid-portfolio2.jpg" alt="Portfolio Item"/></div>
-                  <div class="work-caption font-alt">
-                    <h3 class="work-title">Bag MockUp</h3>
-                    <div class="work-descr">Marketing</div>
-                  </div></a></li>
-              <li class="work-item illustration photography"><a href="portfolio_single_featured_slider1.html">
-                  <div class="work-image"><img src="assets/images/portfolio/grid-portfolio3.jpg" alt="Portfolio Item"/></div>
-                  <div class="work-caption font-alt">
-                    <h3 class="work-title">Disk Cover</h3>
-                    <div class="work-descr">Illustration</div>
-                  </div></a></li>
-              <li class="work-item marketing photography"><a href="portfolio_single_featured_slider2.htmll">
-                  <div class="work-image"><img src="assets/images/portfolio/grid-portfolio4.jpg" alt="Portfolio Item"/></div>
-                  <div class="work-caption font-alt">
-                    <h3 class="work-title">Business Card</h3>
-                    <div class="work-descr">Photography</div>
-                  </div></a></li>
-              <li class="work-item illustration webdesign"><a href="portfolio_single_featured_video1.html">
-                  <div class="work-image"><img src="assets/images/portfolio/grid-portfolio5.jpg" alt="Portfolio Item"/></div>
-                  <div class="work-caption font-alt">
-                    <h3 class="work-title">Web Design</h3>
-                    <div class="work-descr">Webdesign</div>
-                  </div></a></li>
-              <li class="work-item marketing webdesign"><a href="portfolio_single_featured_video2.html">
-                  <div class="work-image"><img src="assets/images/portfolio/grid-portfolio6.jpg" alt="Portfolio Item"/></div>
-                  <div class="work-caption font-alt">
-                    <h3 class="work-title">Paper clip</h3>
-                    <div class="work-descr">Marketing</div>
-                  </div></a></li>
-              <li class="work-item marketing webdesign"><a href="portfolio_single_featured_image1.html">
-                  <div class="work-image"><img src="assets/images/portfolio/grid-portfolio7.jpg" alt="Portfolio Item"/></div>
-                  <div class="work-caption font-alt">
-                    <h3 class="work-title">New Product</h3>
-                    <div class="work-descr">Marketing</div>
-                  </div></a></li>
-              <li class="work-item illustration webdesign"><a href="portfolio_single_featured_image2.html">
-                  <div class="work-image"><img src="assets/images/portfolio/grid-portfolio8.jpg" alt="Portfolio Item"/></div>
-                  <div class="work-caption font-alt">
-                    <h3 class="work-title">Branding</h3>
-                    <div class="work-descr">Illustration</div>
-                  </div></a></li>
-            </ul>
-          </div>
-        </section>
-
-        <section class="module">
-          <div class="container">
-            <h2>예술 대학</h2>
+            <h2>디자인 예술 대학</h2>
             <br>
             <div class="row">
               <div class="col-sm-12">
                 <ul class="filter font-alt" id="filters">
 
                     <li><a class="current wow fadeInUp" href="#" data-filter="*">ALL</a></li>
-                    <li><a class="wow fadeInUp" href="#" data-filter=".webdesign" data-wow-delay="0.6s">영화영상전공</a></li>
-                    <li><a class="wow fadeInUp" href="#" data-filter=".webdesign" data-wow-delay="0.6s">연극전공</a></li>
-                    <li><a class="wow fadeInUp" href="#" data-filter=".webdesign" data-wow-delay="0.6s">무대미술전공</a></li>
-                    <li><a class="wow fadeInUp" href="#" data-filter=".webdesign" data-wow-delay="0.6s">사진영상미디어전공</a></li>
-                    <li><a class="wow fadeInUp" href="#" data-filter=".webdesign" data-wow-delay="0.6s">디지털만화영상전공</a></li>
-                    <li><a class="wow fadeInUp" href="#" data-filter=".webdesign" data-wow-delay="0.6s">문화예술경영전공</a></li>
-                    <li><a class="wow fadeInUp" href="#" data-filter=".webdesign" data-wow-delay="0.6s">디지털콘텐츠전공</a></li>
+                    <li><a class="wow fadeInUp" href="#" data-filter=".커뮤니케이션디자인전공" data-wow-delay="0.2s">커뮤니케이션디자인전공</a></li>
+                    <li><a class="wow fadeInUp" href="#" data-filter=".패션디자인전공" data-wow-delay="0.2s">패션디자인전공</a></li>
+                    <li><a class="wow fadeInUp" href="#" data-filter=".텍스타일디자인전공" data-wow-delay="0.4s">텍스타일디자인전공</a></li>
+                    <li><a class="wow fadeInUp" href="#" data-filter=".스페이스디자인전공" data-wow-delay="0.6s">스페이스디자인전공</a></li>
+                    <li><a class="wow fadeInUp" href="#" data-filter=".세라믹디자인전공" data-wow-delay="0.6s">세라믹디자인전공</a></li>
+                    <li><a class="wow fadeInUp" href="#" data-filter=".인더스트리얼디자인전공" data-wow-delay="0.6s">인더스트리얼디자인전공</a></li>
+                    <li><a class="wow fadeInUp" href="#" data-filter=".AR.VR디자인전공" data-wow-delay="0.6s">AR.VR디자인전공</a></li>
+                    <li><a class="wow fadeInUp" href="#" data-filter=".영화영상전공" data-wow-delay="0.6s">영화영상전공</a></li>
+                    <li><a class="wow fadeInUp" href="#" data-filter=".연극전공" data-wow-delay="0.6s">연극전공</a></li>
+                    <li><a class="wow fadeInUp" href="#" data-filter=".무대미술전공" data-wow-delay="0.6s">무대미술전공</a></li>
+                    <li><a class="wow fadeInUp" href="#" data-filter=".사진영상미디어전공" data-wow-delay="0.6s">사진영상미디어전공</a></li>
+                    <li><a class="wow fadeInUp" href="#" data-filter=".디지털만화영상전공" data-wow-delay="0.6s">디지털만화영상전공</a></li>
+                    <li><a class="wow fadeInUp" href="#" data-filter=".web문화예술경영전공design" data-wow-delay="0.6s">문화예술경영전공</a></li>
+                    <li><a class="wow fadeInUp" href="#" data-filter=".디지털콘텐츠전공" data-wow-delay="0.6s">디지털콘텐츠전공</a></li>
                   </ul>
                 </ul>
-              </div>
+              </div> 
             </div>
             <ul class="works-grid works-grid-gut works-grid-4 works-hover-w" id="works-grid">
-              <li class="work-item illustration webdesign"><a href="portfolio_single_featured_image1.html">
-                  <div class="work-image"><img src="assets/images/portfolio/grid-portfolio1.jpg" alt="Portfolio Item"/></div>
+              <% for(let row of rows) { %>
+                <li class="work-item <%=row.major%>"><a href='/author_portfolio?user=<%=row.username%>'>
+                  <div class="work-image"><img src='<%=row.ipfs_link2%>' alt="Portfolio Item"/></div>
                   <div class="work-caption font-alt">
-                    <h3 class="work-title">Corporate Identity</h3>
-                    <div class="work-descr">Illustration</div>
+                    <h3 class="work-title"><%=row.username%></h3>
                   </div></a></li>
-              <li class="work-item marketing photography"><a href="portfolio_single_featured_image2.html">
-                  <div class="work-image"><img src="assets/images/portfolio/grid-portfolio2.jpg" alt="Portfolio Item"/></div>
-                  <div class="work-caption font-alt">
-                    <h3 class="work-title">Bag MockUp</h3>
-                    <div class="work-descr">Marketing</div>
-                  </div></a></li>
-              <li class="work-item illustration photography"><a href="portfolio_single_featured_slider1.html">
-                  <div class="work-image"><img src="assets/images/portfolio/grid-portfolio3.jpg" alt="Portfolio Item"/></div>
-                  <div class="work-caption font-alt">
-                    <h3 class="work-title">Disk Cover</h3>
-                    <div class="work-descr">Illustration</div>
-                  </div></a></li>
-              <li class="work-item marketing photography"><a href="portfolio_single_featured_slider2.htmll">
-                  <div class="work-image"><img src="assets/images/portfolio/grid-portfolio4.jpg" alt="Portfolio Item"/></div>
-                  <div class="work-caption font-alt">
-                    <h3 class="work-title">Business Card</h3>
-                    <div class="work-descr">Photography</div>
-                  </div></a></li>
-              <li class="work-item illustration webdesign"><a href="portfolio_single_featured_video1.html">
-                  <div class="work-image"><img src="assets/images/portfolio/grid-portfolio5.jpg" alt="Portfolio Item"/></div>
-                  <div class="work-caption font-alt">
-                    <h3 class="work-title">Web Design</h3>
-                    <div class="work-descr">Webdesign</div>
-                  </div></a></li>
-              <li class="work-item marketing webdesign"><a href="portfolio_single_featured_video2.html">
-                  <div class="work-image"><img src="assets/images/portfolio/grid-portfolio6.jpg" alt="Portfolio Item"/></div>
-                  <div class="work-caption font-alt">
-                    <h3 class="work-title">Paper clip</h3>
-                    <div class="work-descr">Marketing</div>
-                  </div></a></li>
-              <li class="work-item marketing webdesign"><a href="portfolio_single_featured_image1.html">
-                  <div class="work-image"><img src="assets/images/portfolio/grid-portfolio7.jpg" alt="Portfolio Item"/></div>
-                  <div class="work-caption font-alt">
-                    <h3 class="work-title">New Product</h3>
-                    <div class="work-descr">Marketing</div>
-                  </div></a></li>
-              <li class="work-item illustration webdesign"><a href="portfolio_single_featured_image2.html">
-                  <div class="work-image"><img src="assets/images/portfolio/grid-portfolio8.jpg" alt="Portfolio Item"/></div>
-                  <div class="work-caption font-alt">
-                    <h3 class="work-title">Branding</h3>
-                    <div class="work-descr">Illustration</div>
-                  </div></a></li>
+                  <% } %>
             </ul>
           </div>
+
         </section>
+
         <div class="module-small bg-dark">
           <div class="container">
             <div class="row">
@@ -331,13 +223,5 @@
     <script src="/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
     <script src="/js/home/plugins.js"></script>
     <script src="/js/home/main.js"></script>
-    <script>
-      function btn(){ 
-        searchInput = document.getElementById('searchInput');
-        searchInput.value = ""
-        alert('검색 버튼이 클릭되었습니다'); 
-
-      }
-    </script>
   </body>
 </html>

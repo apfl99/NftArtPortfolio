@@ -100,32 +100,15 @@ const output = {
     },    
     authorPortfolio : (req,res) => {
         const UserName = req.query.user; 
+        
         // 뷰
-        const query = "SELECT art.*, login_designer.* FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId where login_designer.username=? ORDER BY art.like DESC;";
+        const query = "SELECT art.*, login_designer.* FROM art RIGHT JOIN login_designer ON art.author_id = login_designer.userId where login_designer.username=? ORDER BY art.like DESC;";
         db.query(query, [UserName], (err,rows) => {
             if(err) {
                 console.error("query error" + err);
                 res.status(500).send("Internal Server Error");
             } else {
-                // 전체 조회수
-                var view_sum = 0;
-                for(let row of rows) {
-                    view_sum += row.view_count;
-                }
-                res.render("home/author_portfolio",{rows : rows, view_sum: view_sum});
-            }
-        })
-    },
-    authorPortfolio_nft: async (req,res) => {
-        const UserName = req.query.user; 
-        // 뷰
-        const query = "SELECT art.*, login_designer.* FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId where login_designer.username=? ORDER BY art.like DESC;";
-        db.query(query, [UserName], (err,rows) => {
-            if(err) {
-                console.error("query error" + err);
-                res.status(500).send("Internal Server Error");
-            } else {
-                const query1 = "select author_record.*, login_designer.* FROM author_record LEFT JOIN login_designer ON author_record.author_id_r = login_designer.userId where login_designer.username=?;"
+                const query1 = "select author_record.*, login_designer.* FROM author_record RIGHT JOIN login_designer ON author_record.author_id_r = login_designer.userId where login_designer.username=?;"
                 db.query(query1, [UserName], (err,datas) => {
                     if(err) {
                         console.error("query error" + err);
@@ -144,6 +127,44 @@ const output = {
                             for(let nft of nfts) {
                                 view_sum_nft += nft.view_count;
                             }
+
+                            res.render("home/author_portfolio",{rows : rows, view_sum: view_sum, datas: datas, nfts: nfts, view_sum_nft: view_sum_nft});
+                        })
+                    }
+                })
+            }
+        })
+    },
+    authorPortfolio_nft: async (req,res) => {
+        const UserName = req.query.user; 
+        
+        // 뷰
+        const query = "SELECT art.*, login_designer.* FROM art RIGHT JOIN login_designer ON art.author_id = login_designer.userId where login_designer.username=? ORDER BY art.like DESC;";
+        db.query(query, [UserName], (err,rows) => {
+            if(err) {
+                console.error("query error" + err);
+                res.status(500).send("Internal Server Error");
+            } else {
+                const query1 = "select author_record.*, login_designer.* FROM author_record RIGHT JOIN login_designer ON author_record.author_id_r = login_designer.userId where login_designer.username=?;"
+                db.query(query1, [UserName], (err,datas) => {
+                    if(err) {
+                        console.error("query error" + err);
+                        res.status(500).send("Internal Server Error");
+                    }
+                    else {
+                        const query2 = "SELECT art.*, login_designer.* FROM art LEFT JOIN login_designer ON art.author_id = login_designer.userId where login_designer.username= ? AND art.isNFT=1;";
+                        db.query(query2, [UserName], (err,nfts) => {
+                            // 전체 조회수
+                            var view_sum = 0;
+                            for(let row of rows) {
+                                view_sum += row.view_count;
+                            }
+                            //NFT 조회수
+                            var view_sum_nft = 0;
+                            for(let nft of nfts) {
+                                view_sum_nft += nft.view_count;
+                            }
+
                             res.render("home/author_portfolio_nft",{rows : rows, view_sum: view_sum, datas: datas, nfts: nfts, view_sum_nft: view_sum_nft});
                         })
                     }
@@ -151,9 +172,20 @@ const output = {
             }
         })
     },
-    authors : (req,res) => {
-        res.render("home/authors");
-    },    
+    //db에서 작가 전공에 해당하는게 맞으면 해당 전공의 ipfs2, username가져오기
+    author : (req,res) => {
+        const UserName = req.query.user; 
+        // 뷰
+        const query5 = "SELECT login_designer.username, login_designer.ipfs_link2, login_designer.major FROM NFT.login_designer ORDER BY login_designer.birth ASC;";
+        db.query(query5, (err,rows) => {
+            if(err) {
+                console.error("query error" + err);
+                res.status(500).send("Internal Server Error");
+            } else {
+                res.render("home/authors",{rows : rows});
+            }
+        })
+    },   
     myPage : (req,res) => {
         res.render("home/mypage");
     },    
@@ -243,26 +275,35 @@ const process = {
     },
 
     personalinfoModification : async (req,res) => { 
+        if(req.file != undefined) {
+            // 파일 ipfs 등록 및 CID, ipfsLink 반환
+            var data = new Buffer(fs.readFileSync(req.file.path));
 
-        // 파일 ipfs 등록 및 CID, ipfsLink 반환
-        var data = new Buffer(fs.readFileSync(req.file.path));
+            //IPFS
+            var ipfsVal = await ipfs.add(data);
 
-        //IPFS
-        var ipfsVal = await ipfs.add(data);
+            //ipfs link generate
+            var url = 'https://infura-ipfs.io/ipfs/';
+            url += (ipfsVal[0].hash);
+            url += '?filename=';
+            url += (req.file.originalname);
+            var ipfsUrl =  encodeURI(url);
+            
 
-        //ipfs link generate
-        var url = 'https://infura-ipfs.io/ipfs/';
-        url += (ipfsVal[0].hash);
-        url += '?filename=';
-        url += (req.file.originalname);
-        var ipfsUrl =  encodeURI(url);
-        
-
-        //넘겨줄 ipfs값들(url,cid)
-        var ipfsResultVal = {
-            ipfsCid: ipfsVal[0].hash,
-            ipfsUrl: ipfsUrl
+            //넘겨줄 ipfs값들(url,cid)
+            var ipfsResultVal = {
+                ipfsCid: ipfsVal[0].hash,
+                ipfsUrl: ipfsUrl
+            }
+        } else {
+            //넘겨줄 ipfs값들(url,cid)
+            var ipfsResultVal = {
+                ipfsCid: undefined,
+                ipfsUrl: undefined
+            }
         }
+
+
 
       //DB
         const user = new User(req.body,ipfsResultVal);
@@ -318,6 +359,34 @@ const process = {
     NFT: async (req,res) => {
         const response = await generate_NFT_info(req.body.metaAccount);
         return res.json(response);
+    },
+    author : async (req,res) => { 
+
+        // 파일 ipfs 등록 및 CID, ipfsLink 반환
+        var data = new Buffer(fs.readFileSync(req.file.path));
+
+        //IPFS
+        var ipfsVal = await ipfs.add(data);
+
+        //ipfs link generate
+        var url = 'https://infura-ipfs.io/ipfs/';
+        url += (ipfsVal[0].hash);
+        url += '?filename=';
+        url += (req.file.originalname);
+        var ipfsUrl =  encodeURI(url);
+        
+
+        //넘겨줄 ipfs값들(url,cid)
+        var ipfsResultVal = {
+            ipfsCid: ipfsVal[0].hash,
+            ipfsUrl: ipfsUrl
+        }
+
+      //DB
+        const user = new User(req.body,ipfsResultVal);
+        const response = await user.author();
+        return res.json(response);
+        
     },
 
 };

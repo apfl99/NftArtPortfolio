@@ -21,7 +21,7 @@ router.get('/art_detail',ctrl.output.artDetail);
 router.get('/art',ctrl.output.art);
 router.get('/author_portfolio',ctrl.output.authorPortfolio);
 router.get('/author_portfolio_nft',ctrl.output.authorPortfolio_nft);
-router.get('/authors',ctrl.output.authors);
+router.get('/authors',ctrl.output.author);
 router.get('/mypage',ctrl.output.myPage);
 router.get('/404',ctrl.output.errPage);
 router.get('/generateNFT',ctrl.output.generateNFT);
@@ -35,6 +35,7 @@ router.post('/author_portfolio_nft',ctrl.process.authorPortfolio_nft);
 router.post('/mintAT', ctrl.process.mintAT);
 router.post('/recordRegister', ctrl.process.recordRegister);
 router.post('/NFT',ctrl.process.NFT);
+router.post('/authors',ctrl.process.author);
 
 
 

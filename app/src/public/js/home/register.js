@@ -6,6 +6,8 @@ const username = document.querySelector("#username");
 const passwd = document.querySelector("#password");
 const confirmPasswd = document.querySelector("#re-password");
 const registerBtn = document.querySelector("#register_btn");
+const major = document.getElementById('major');
+const birth = document.getElementById('birth');
 
 registerBtn.addEventListener("click",register);
 
@@ -22,7 +24,9 @@ function register() {
         const req = {
             email: email.value,
             username : username.value,
-            passwd : passwd.value
+            passwd : passwd.value,
+            major : major.value,
+            birth : birth.value,
         };
 
         //프론트 -> 서버

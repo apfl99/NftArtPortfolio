@@ -95,58 +95,41 @@
           <div class="container">
             <div class="row">
               <div class="col-sm-4 col-md-3 sidebar">
-                
                 <div class="widget">
                     <h5 class="widget-title font-alt">하고 싶은 말</h5><%=rows[0].comment%>
-                    </div>
+                </div>
                 <div class="widget">
                   <h5 class="widget-title font-alt">작가 이력</h5>
                   <ul class="widget-posts">
-                    <li class="clearfix">
-                      <div class="widget-posts-image"><a href="#"><img src="assets/images/rp-1.jpg" alt="Post Thumbnail"/></a></div>
-                      <div class="widget-posts-body">
-                        <div class="widget-posts-title"><a href="#">Designer Desk Essentials</a></div>
-                        <div class="widget-posts-meta">23 january</div>
-                      </div>
-                    </li>
-                    <li class="clearfix">
-                      <div class="widget-posts-image"><a href="#"><img src="assets/images/rp-2.jpg" alt="Post Thumbnail"/></a></div>
-                      <div class="widget-posts-body">
-                        <div class="widget-posts-title"><a href="#">Realistic Business Card Mockup</a></div>
-                        <div class="widget-posts-meta">15 February</div>
-                      </div>
-                    </li>
-                    <li class="clearfix">
-                      <div class="widget-posts-image"><a href="#"><img src="assets/images/rp-3.jpg" alt="Post Thumbnail"/></a></div>
-                      <div class="widget-posts-body">
-                        <div class="widget-posts-title"><a href="#">Eco bag Mockup</a></div>
-                        <div class="widget-posts-meta">21 February</div>
-                      </div>
-                    </li>
-                    <li class="clearfix">
-                      <div class="widget-posts-image"><a href="#"><img src="assets/images/rp-4.jpg" alt="Post Thumbnail"/></a></div>
-                      <div class="widget-posts-body">
-                        <div class="widget-posts-title"><a href="#">Bottle Mockup</a></div>
-                        <div class="widget-posts-meta">2 March</div>
-                      </div>
-                    </li>
+                    <% if (datas[0].record_id != null) { %>
+                      <% for(let data of datas) { %>
+                      <li class="clearfix">
+                        <div class="widget-posts-body">
+                          <div class="widget-posts-title"><%=data.record_host%> <%=data.record_subject%> <%=data.record_result%></div>
+                          <div class="widget-posts-meta"><%=data.record_date.toDateString()%></div>
+                        </div>
+                      </li>
+                      <% } %>
+                    <% } %>
+                    <% if (datas[0].record_id == null) { %>
+                      <div class="widget-posts-title">아직 등록된 이력이 없습니다.</div>
+                    <% } %>
                   </ul>
                 </div>
-                
-                
               </div>
+
               <div class="col-sm-8 col-sm-offset-1">
                 <div class="post">
-
                     <div class="post-header font-alt">
                         <h2 class="post-title"><%=rows[0].username%></a></h2>
                         <div class="post-meta"> <%=rows[0].birth.toDateString()%> </a> <%=rows[0].major%>
                         </div>
-                      </div>
+                    </div>
                       <div class="post-entry">
                         <p></p>
                       </div>
-                     </div>
+                
+                <% if (rows[0].art_id != null) { %>
                   <div class="post-thumbnail"><img src="<%=rows[0].ipfs_link%>" alt="Blog-post Thumbnail"/></a></div>
                   <div class="post-header font-alt">
                     <h2 class="post-title">제일 샤라웃 받은 작품 </a></h2>
@@ -156,44 +139,91 @@
                   <div class="post-entry">
                     <p><%=rows[0].art_explain%></p>
                   </div>
+                <% } %>
                 </div>
+              </div>
                
-               
+               <!---->
                 <div class="post #">
-                    
-                    <div class="post-header font-alt">
-                        <div style="padding: 300px;">  </div>
-                      <div><h2 class="post-title">작품들 </a></h2> </div>
+                  <ul class="nav nav-tabs font-alt" role="tablist">
+                    <li class="active"><a href="#my_art" data-toggle="tab"><%=rows[0].username%>의 작품</a></li>
+                    <li><a href="#my_nft" data-toggle="tab"><%=rows[0].username%>의 NFT</a></li>
+                  </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="my_art">
+                      <div><h2 class="post-title">작품들</a></h2> </div>
                       <br>
-                      <div class="post-meta">By <%=rows[0].username%>| <%=rows[0].date_1.toDateString()%> | 전체 조회수 : <%=view_sum%> | </a><%=rows[0].major%></div>
-                       
-                    </div>
-                    <div class="post-entry"> </div>
+                      <div class="post-meta">By <%=rows[0].username%>| <%=rows[0].birth.toDateString()%> | 전체 조회수 : <%=view_sum%> | </a><%=rows[0].major%></div>
                       <section>
+                        <div class="post-entry"> </div>
                         <div class="container">
-                          <% for(let row of rows) { %>
-                            <div class="col-sm-6 col-md-3 col-lg-3">
-                              <div class="shop-item" style="margin: 0;">
-                                <div class="shop-item-image"><img src='<%=row.ipfs_link%>' style="width:fit-content; height:250px;"/>
-                                  <div class="shop-item-detail"><button class="btn btn-d btn-round" type="submit" onclick="location.href='/art_detail?viewId=<%=row.art_id%>'">작품 상세보기</button> 
+                          <% if (rows[0].art_id != null) { %>
+                            <% for(let row of rows) { %>
+                              <div class="col-sm-6 col-md-3 col-lg-3">
+                                <div class="shop-item" style="margin: 0;">
+                                  <div class="shop-item-image"><img src='<%=row.ipfs_link%>' style="width:fit-content; height:250px;"/>
+                                    <div class="shop-item-detail"><button class="btn btn-d btn-round" type="submit" onclick="location.href='/art_detail?viewId=<%=row.art_id%>'">작품 상세보기</button> 
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="shop-item-info">
+                                  <div style="float:left; width:85%">
+                                    <h4 class="shop-item-title font-alt"><%=row.art_name%></h4>
+                                  </div>
+                                  <div style="float:left; width:15%; margin:auto; line-height: 62.88px;">
+                                    <i class="fa fa-heart"></i><span class="like_count">  <%=row.like%></span>
                                   </div>
                                 </div>
                               </div>
-                              <div class="shop-item-info">
-                                <div style="float:left; width:85%">
-                                  <h4 class="shop-item-title font-alt"><%=row.art_name%></h4>
-                                </div>
-                                <div style="float:left; width:15%; margin:auto; line-height: 62.88px;">
-                                  <i class="fa fa-heart"></i><span class="like_count">  <%=row.like%></span>
-                                </div>
-                              </div>
-                            </div>
+                            <% } %>
+                          <% } %>
+                          <% if (rows[0].art_id == null) { %>
+                            <div><h5 class="post-title">아직 등록된 작품이 없습니다.</h5> </div>
                           <% } %>
                         </div>
                       </section> 
-                    </div>      
-                 </div>
-              </div>
+                    </div>
+                
+                    <div class="tab-pane" id="my_nft">
+                      <div><h2 class="post-title">NFT</a></h2> </div>
+                      <br>
+                      <div class="post-meta">By <%=rows[0].username%>| <%=rows[0].birth.toDateString()%> | 전체 조회수 : <%=view_sum_nft%> | </a><%=rows[0].major%></div>
+                      <section>
+                        <div class="post-entry"> </div>
+                        <div class="container">
+                          <% if (nfts.length != 0) { %>
+                            <% for(let nft of nfts) { %>
+                              <div class="col-sm-6 col-md-3 col-lg-3">
+                                <div class="shop-item" style="margin: 0;">
+                                  <div class="shop-item-image"><img src='<%=nft.ipfs_link%>' style="width:fit-content; height:250px;"/>
+                                    <div class="shop-item-detail"><button class="btn btn-d btn-round" type="submit" onclick="location.href='/art_detail?viewId=<%=nft.art_id%>'">작품 상세보기</button> 
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="shop-item-info">
+                                  <div style="float:left; width:85%">
+                                    <h4 class="shop-item-title font-alt"><%=nft.art_name%></h4>
+                                  </div>
+                                  <div style="float:left; width:15%; margin:auto; line-height: 62.88px;">
+                                    <i class="fa fa-heart"></i><span class="like_count">  <%=nft.like%></span>
+                                  </div>
+                                </div>
+                              </div>
+                            <% } %>
+                          <% } %>
+                          <% if (nfts.length == 0) { %>
+                            <div><h5 class="post-title">아직 발행된 NFT가 없습니다.</h5> </div>
+                          <% } %>
+                        </div>
+                      </section> 
+                    </div>
+
+                  </div>
+
+                </div>
+              
+                  
+            </div>
           </div>
         </section>
       

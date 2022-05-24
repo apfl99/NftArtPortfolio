@@ -16,8 +16,8 @@ class UserStorage {
 
     static async save(userInfo) {
         return new Promise((resolve, reject) => {
-            const query = "INSERT INTO NFT.login_designer(login_designer.userId,login_designer.username,login_designer.password) VALUES(?, ?, ?);";
-            db.query(query, [userInfo.email,userInfo.username,userInfo.passwd], (err) => {
+            const query = "INSERT INTO NFT.login_designer(login_designer.userId,login_designer.username,login_designer.password,login_designer.major,login_designer.birth) VALUES(?, ?, ?, ?, ?);";
+            db.query(query, [userInfo.email,userInfo.username,userInfo.passwd,userInfo.major,userInfo.birth], (err) => {
                 if(err) reject(`${err}`);
                 resolve({success: true});
             });
@@ -36,11 +36,100 @@ class UserStorage {
 
 
     static async art_save1(artInfo1,ipfsVal) {
+        try {
+            var query = "update NFT.login_designer set ";
+            var query1;
+            var query2;
+            var query3;
+            var query4;
+            var query5 =  "where userId =" + "'"+  artInfo1.userId+"'" + ";";
+
+            var num = 0;
+
+            // 1.작가 프로필 사진 공백일때,
+            if(ipfsVal.ipfsUrl == undefined ){
+            query1 = ""; 
+            } 
+            else {
+                query1= "login_designer.ipfs_link2 ="+"'"+ipfsVal.ipfsUrl+"'"+",";
+                num++;
+            }
+    
+            // 2. 작가 생년월일 공백일 때, 
+            if(artInfo1.birth == ''){
+            query2 = "";    
+            }
+            else {
+                query2 = "login_designer.birth ="+"'"+artInfo1.birth+"'"+",";
+                num++;
+            }
+    
+            // 3. 작가 전공 공백일 때, 
+            if(artInfo1.major == "전체"){
+            query3 ="";
+            }
+            else{
+                query3 = "login_designer.major ="+"'"+artInfo1.major+"'"+",";
+                num++;
+            } 
+    
+            // 4. 작가 하고 싶은 말 공백일 때, 
+            if(artInfo1.comment == undefined){
+            query4 ="";
+            }
+            else{
+                query4 = "login_designer.comment ="+"'"+artInfo1.comment+"'"+" ";
+            }
+            
+            
+            if(',' )
+            
+                
+            query += query1;
+            query += query2;
+            query += query3;
+            query += query4;
+            query += query5;
+           // console.log(query);
+            
+            var count = 18;
+            var id_len = artInfo1.userId.length;
+            var sum = count + id_len;
+            var index = query.length - sum
+
+            const arr = [...query];
+            
+            arr[index] = ' ';
+            var new_query = arr.join('');
+          //  console.log(new_query);
+
+        
+
+            
+
+
+        }catch (err){
+            console.log(err);
+        }
+        
+       //-----------------------------------f-------------------------------------------------------------------------------------------//
+        //개인정보수정 아이디 넘기기 위해 수정한 코드 
         return new Promise((resolve, reject) => {
-            const query3 = "update NFT.login_designer set login_designer.ipfs_link2= ? , login_designer.major = ?, login_designer.birth = ?, login_designer.comment = ? where userId=? ";
-            db.query(query3, [ipfsVal.ipfsUrl, artInfo1.major, artInfo1.birth, artInfo1.personalDescription, artInfo1.userId], (err) => {
-                if(err) reject(`${err}`);
+            db.query(new_query, (err) => {
+                if(err) { 
+                reject(`${err}`);
                 resolve({success: true});
+                } else{
+                    const query = "SELECT NFT.login_designer.username FROM NFT.login_designer WHERE userId = ?;";
+                    db.query(query,[artInfo1.userId], (err,data) => {
+                        if(err){
+                        reject(`${err}`);
+                        } else {
+                            resolve({success: true, data:data[0]});
+                        }
+                    })
+                }
+
             });
         });
     };
