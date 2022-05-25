@@ -31,7 +31,7 @@ function art_register(e) {
             $('#artDescription-message').text('작품 설명을 입력해주세요.');
         }
 
-        const checkResult = checkValue(files.files[0]) && checkValue(artName.value) && checkValue(artDescription.value) && fileCheck_size(files.files[0]) && fileCheck_ext();
+        const checkResult = (checkValue(files.files[0]) && checkValue(artName.value) && checkValue(artDescription.value) && fileCheck_size(files.files[0]) && fileCheck_ext_a());
 
         if(checkResult) {
             //폼 데이터 처리
@@ -87,11 +87,12 @@ function fileCheck_size(file) {
 }
 
 //파일 확장자 체크
-function fileCheck_ext() {
+function fileCheck_ext_a() {
     
     var ext = $("input[name='files']").val().split('.').pop().toLowerCase();
+    
     if($.inArray(ext, ['gif','png','jpg','jpeg','svg']) == -1) {
-        alert("등록 할수 없는 확장자입니다.");
+        alert(ext);
         return false;
     } else {
         return true;

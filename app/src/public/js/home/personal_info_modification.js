@@ -13,7 +13,7 @@ function personal_info(e) {
         const major = document.getElementById('major');
         const personalDescription = document.getElementById('personalDescription');
         
-        const checkResult = (fileCheck_ext() && fileCheck_size(filed.files[0]));
+        const checkResult = (fileCheck_ext_p() && fileCheck_size(filed.files[0]));
 
 
         if(checkResult) {
@@ -61,7 +61,7 @@ function fileCheck_size(file) {
 }
 
 //파일 확장자 체크
-function fileCheck_ext() {
+function fileCheck_ext_p() {
     
     var ext = $("input[name='filed']").val().split('.').pop().toLowerCase();
     if($.inArray(ext, ['png','jpg','jpeg','svg']) == -1) {

@@ -18,7 +18,8 @@ function register() {
     checkRePasswordFormat(passwd.value, confirmPasswd.value);
     checkCheckBox();
 
-    var checkResult = checkEmailFormat(email.value) && checkUsernameFormat(username.value) && checkPasswordFormat(passwd.value) && checkRePasswordFormat(passwd.value, confirmPasswd.value) && checkCheckBox();
+    var checkResult = (checkEmailFormat(email.value) && checkUsernameFormat(username.value) && checkPasswordFormat(passwd.value) && checkRePasswordFormat(passwd.value, confirmPasswd.value) && checkCheckBox() && checkBirth(birth.value));
+
 
     if (checkResult) {
         const req = {
@@ -122,3 +123,13 @@ function checkCheckBox(check) {
     return Boolean(checked);
 };
   
+function checkBirth(value) {
+  var valueCheck = value;
+  if( !valueCheck ){
+      $('#birth-message').text('생년월일을 입력해주세요');
+      return false;
+  }else{
+      $('#birth-message').text('');
+      return true;
+  }
+}
