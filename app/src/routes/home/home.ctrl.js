@@ -33,6 +33,11 @@ const atContract = new web3.eth.Contract(DEPLOYED_ABI,DEPLOYED_ADDRESS);
 const Tx = require('ethereumjs-tx').Transaction;
 
 const request_req = require('request');
+const { response } = require("express");
+
+const ethPrice = require('eth-price');
+ 
+const { convert } = require('exchange-rates-api');
 
 const output = {
     root : (req,res) => {
@@ -388,6 +393,37 @@ const process = {
         return res.json(response);
         
     },
+    mintATBtn : async (req,res) => { 
+        //현재 네트워크의 gasPrice 가져오기
+        var gasPrice = await web3.eth.getGasPrice(function(error, result) {  
+            return result;
+        });
+        
+        //예상 수수료
+        var gasPrice1 = parseInt(gasPrice);
+        var gasLimit1 = parseInt(316892);
+        var txnFee = gasLimit1 * gasPrice1;
+        var txnFee1 = web3.utils.fromWei(txnFee.toString(),'ether');
+
+        //수수료 ETH -> 달러로
+        const etherPrice = await ethPrice('usd');
+        var testString = etherPrice.toString();	// 원래 문자열
+        var regex = /[^0-9]/g;				// 숫자가 아닌 문자열을 선택하는 정규식
+        var result = testString.replace(regex, "");
+        var result1 = Number(result.substring(0,4));
+
+        var txnFee2 = Number(txnFee1);
+        var txnFee_usd = result1 * txnFee2; // 수수료 달러
+        var txnFee_usd1 = txnFee_usd.toFixed(2);
+
+        
+
+        
+        var response = {txnFee : txnFee1, txnFee_USD : txnFee_usd1};
+        return res.json(response);
+        
+
+    }
 
 };
 
@@ -494,8 +530,6 @@ async function mintAT_NFT(ArtName,Author,CID,Date,Link,privateKey) {
         //이미 발행된 토큰
         return { success: false, msg:"이미 발행된 토큰입니다."};
     }else {
-        const total = await atContract.methods.totalSupply().call();
-        console.log(total);
     
         //GAS비 절약을 위한 해쉬화
         const metaData = getERC721MetadataSchema(CID,ArtName,Link);
@@ -516,7 +550,16 @@ async function mintAT_NFT(ArtName,Author,CID,Date,Link,privateKey) {
         //트랜잭션 서명 전에 해당 계정의 잔고가 얼마있는지 조회
         var balance = await web3.eth.getBalance(Account_info.address);
         
-        if(balance < 307200000000) {
+
+        //현재 네트워크의 gasPrice 가져오기
+        var gasPrice = await web3.eth.getGasPrice(function(error, result) {  
+            return result;
+        });
+        console.log('gasprice : '+ gasPrice);
+        
+        
+        
+        if(parseInt(balance) < parseInt(gasPrice)) { 
             return { success: false, msg:"계정 잔고 부족"};
         } else {
             //컨트랙에서 넌스값 구하기
@@ -528,19 +571,25 @@ async function mintAT_NFT(ArtName,Author,CID,Date,Link,privateKey) {
                 nonce: accountNonce,
                 from: Account_info.address,
                 to: DEPLOYED_ADDRESS, 
-                gasPrice: 307200000000,
-                gasLimit: 500000,
+                gasPrice: web3.utils.toHex(gasPrice),
+                gasLimit: 500000, // 해당 트랜잭션에 대한 gaslimit 316892
                 value: '0x0',
                 data: atContract.methods.mintAT(Account_info.address,CID,ArtName, Author, Date, "https://infura-ipfs.io/ipfs/"+res[0].hash).encodeABI()
             };
             
+                    
             const tx = new Tx(rawTx, { 'chain': 'ropsten' });
             tx.sign(privateKey_B);
             
             var serializedTx = '0x' + tx.serialize().toString('hex');
+
+            var txHash;
+
             try {
-                await web3.eth.sendSignedTransaction(serializedTx.toString('hex'), function (err, hash) {console.log(hash)}).on('receipt', console.log);
-                return { success: true, msg: 'NFT 발행 성공'};
+                await web3.eth.sendSignedTransaction(serializedTx.toString('hex'), function (err, hash) {
+                    txHash = hash;
+                }).on('receipt', console.log);
+                return { success: true, msg: txHash};
             } catch {
                 return { success: false, msg: 'NFT 발행 실패'};
             }
@@ -650,6 +699,8 @@ async function getMetadata (tokenUri) {
         });
     })
 }
+
+
 
 
 

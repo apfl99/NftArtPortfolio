@@ -30,7 +30,8 @@ async function mintAT() {
     .then((res) => {
         if (res.success) {
             $('#loginModal').modal('hide');
-            alert(res.msg);
+            alert('NFT 발행 성공');
+            window.open("https://ropsten.etherscan.io/tx/" + res.msg);
         } else {
             $('#loginModal').modal('hide');
             alert(res.msg);

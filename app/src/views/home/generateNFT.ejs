@@ -122,7 +122,7 @@
                   <%}%>
                   <h1 class="product-title font-alt" style="float: left;"><%=row.art_name%></h1>
                     <br><br><br>
-                    <a href="/author_portfolio"><u><h5><%=row.username%></h5></u></a>
+                    <a href="/author_portfolio?user=<%=row.username%>"><u><h5><%=row.username%></h5></u></a>
                   <div class="row mb-20">
                     <div class="col-sm-12"><span><i class="fa fa-star star"></i></span><span><i class="fa fa-star star"></i></span><span><i class="fa fa-star star"></i></span><span><i class="fa fa-star star"></i></span><span><i class="fa fa-star star-off"></i></span><a class="open-tab section-scroll" href="#reviews">-2customer reviews(beta)</a>
                     </div>
@@ -140,7 +140,7 @@
                     </div>
                   </div>
                   <div class="row mb-20" style="margin:0 auto; display:block; text-align:center;">
-                    <button class="btn btn-d btn-round" type="submit" onclick="mintATBtn()"><i class="fa fa-cog fa-spin"></i> NFT 발행하기</button> 
+                    <button class="btn btn-d btn-round" type="submit" id="mintBtn"><i class="fa fa-cog fa-spin"></i> NFT 발행하기</button> 
                  </div>
                 </div>
             </div>
@@ -376,6 +376,8 @@
               <div class="form-group">
                 <label for="input-password">비밀키 입력</label>
                 <input type="password" class="form-control" id="input-password">
+                <p class="help-block" id="txnfee-message"></p>
+                <p class="help-block" id="txnfeeUSD-message"></p>
               </div>
             </div>
             <div class="modal-footer">
@@ -405,12 +407,6 @@
     <script src="/js/home/main.js"></script>
     <script src="bower_components/web3/dist/web3.min.js"></script>
     <script src="/js/home/mintAT.js"></script>
-    
-    <script>
-    function mintATBtn() {
-        $('#loginModal').modal('show');
-    }
-      
-    </script>
+    <script src="/js/home/mintATBtn.js"></script>
   </body>
 </html>
