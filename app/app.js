@@ -2,7 +2,7 @@
 
 // 모듈
 const dotenv = require("dotenv");
-dotenv.config()
+dotenv.config();
 const express = require("express");
 const app = express();
 const home = require("./src/routes/home");
