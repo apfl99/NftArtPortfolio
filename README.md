@@ -13,14 +13,6 @@ Artech :Art Portfolio Websites Using NFT
 * Solidity v0.5.16
 * Web.js v1.5.3
 
-## Execution
-1. Open Terminal
-
-<img width="863" alt="스크린샷 2022-06-27 오후 10 01 56" src="https://user-images.githubusercontent.com/64346003/175947905-29b9f5e0-eeaf-44a2-8449-ef171cc8ccb0.png">
-
-2. Local web server up 
-
-<img width="712" alt="스크린샷 2022-06-27 오후 10 03 03" src="https://user-images.githubusercontent.com/64346003/175948066-edcdc077-9994-4ae3-b37f-c690913d9766.png">
 
 ## Presentation
 
