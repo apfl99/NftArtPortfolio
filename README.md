@@ -12,6 +12,9 @@ Artech :Art Portfolio Websites Using NFT
 * Truffle v5.5.12
 * Solidity v0.5.16
 * Web.js v1.5.3
+* Infura
+* IPFS
+* ...
 
 
 ## Presentation
