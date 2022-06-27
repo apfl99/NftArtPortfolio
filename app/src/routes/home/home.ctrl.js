@@ -324,15 +324,18 @@ const process = {
       return res.json(response);
     },
     mintAT: async (req,res) => { 
-        const artId = req.body.artId;
-        const pk = req.body.pk;
 
+        const artId = req.body.artId; // 해당 작품 ID
+        const pk = req.body.pk; // 사용자 입력 비밀키
+
+        // 해당 작품 DB 조회
         const query = "SELECT * FROM NFT.art WHERE art_id = ?;";
         await db.query(query, [artId],  async (err,data) => {
             if(err) {
                 console.error("query error" + err);
                 res.status(500).send("Internal Sever Error");
             } else {
+                // NFT 발행 요청
                 var response = await mintAT_data(data[0],pk);
                 if(response.success) {
                     //NFT 발행 완료시 토큰 여부 저장
@@ -394,31 +397,30 @@ const process = {
         
     },
     mintATBtn : async (req,res) => { 
+
         //현재 네트워크의 gasPrice 가져오기
         var gasPrice = await web3.eth.getGasPrice(function(error, result) {  
             return result;
         });
         
-        //예상 수수료
+        //예상 수수료 계산
         var gasPrice1 = parseInt(gasPrice);
-        var gasLimit1 = parseInt(316892);
+        var gasLimit1 = parseInt(316892); //해당 트랜잭션에 대한 gasLimit(고정: 데이터 용량 일정)
         var txnFee = gasLimit1 * gasPrice1;
         var txnFee1 = web3.utils.fromWei(txnFee.toString(),'ether');
 
-        //수수료 ETH -> 달러로
+        //수수료 ETH -> $
         const etherPrice = await ethPrice('usd');
-        var testString = etherPrice.toString();	// 원래 문자열
-        var regex = /[^0-9]/g;				// 숫자가 아닌 문자열을 선택하는 정규식
+        var testString = etherPrice.toString();	
+        var regex = /[^0-9]/g;				
         var result = testString.replace(regex, "");
         var result1 = Number(result.substring(0,4));
 
         var txnFee2 = Number(txnFee1);
-        var txnFee_usd = result1 * txnFee2; // 수수료 달러
+        var txnFee_usd = result1 * txnFee2; 
         var txnFee_usd1 = txnFee_usd.toFixed(2);
 
-        
-
-        
+        // 예상 수수료 Return
         var response = {txnFee : txnFee1, txnFee_USD : txnFee_usd1};
         return res.json(response);
         
@@ -530,11 +532,6 @@ async function mintAT_NFT(ArtName,Author,CID,Date,Link,privateKey) {
         //이미 발행된 토큰
         return { success: false, msg:"이미 발행된 토큰입니다."};
     }else {
-    
-        //GAS비 절약을 위한 해쉬화
-        const metaData = getERC721MetadataSchema(CID,ArtName,Link);
-        var res = await ipfs.add(Buffer.from(JSON.stringify(metaData))); //ipfs에 파일 업로드 후 해쉬 값을 저장 -> 해쉬 값을 통해 용량 및 가스비 절감
-    
         
         //발행 계정 정보 address, privateKey, signTransaction, sign, encrypt
         var Account_info;
@@ -563,8 +560,13 @@ async function mintAT_NFT(ArtName,Author,CID,Date,Link,privateKey) {
             return { success: false, msg:"계정 잔고 부족"};
         } else {
             //컨트랙에서 넌스값 구하기
-            const accountNonce = '0x' + (await web3.eth.getTransactionCount(Account_info.address)).toString(16); //DEPLOYED_ADDRESS
+            const accountNonce = '0x' + (await web3.eth.getTransactionCount(Account_info.address)).toString(16); 
         
+            //GAS비 절약을 위한 해쉬화
+             const metaData = getERC721MetadataSchema(CID,ArtName,Link);
+            //ipfs에 파일 업로드 후 해쉬 값을 저장 -> 해쉬 값을 통해 용량 및 가스비 절감
+            var res = await ipfs.add(Buffer.from(JSON.stringify(metaData))); 
+
             //트랜잭션 서명 및 보내기    
             const rawTx =
             {
@@ -574,10 +576,12 @@ async function mintAT_NFT(ArtName,Author,CID,Date,Link,privateKey) {
                 gasPrice: web3.utils.toHex(gasPrice),
                 gasLimit: 500000, // 해당 트랜잭션에 대한 gaslimit 316892
                 value: '0x0',
-                data: atContract.methods.mintAT(Account_info.address,CID,ArtName, Author, Date, "https://infura-ipfs.io/ipfs/"+res[0].hash).encodeABI()
+                // 컨트랙 함수 실행
+                data: atContract.methods.mintAT(Account_info.address,CID,ArtName, 
+                    Author, Date, "https://infura-ipfs.io/ipfs/"+res[0].hash).encodeABI()
             };
             
-                    
+            // 블록체인 네트워크 지정
             const tx = new Tx(rawTx, { 'chain': 'ropsten' });
             tx.sign(privateKey_B);
             
@@ -586,6 +590,7 @@ async function mintAT_NFT(ArtName,Author,CID,Date,Link,privateKey) {
             var txHash;
 
             try {
+                // 서명 및 전송
                 await web3.eth.sendSignedTransaction(serializedTx.toString('hex'), function (err, hash) {
                     txHash = hash;
                 }).on('receipt', console.log);
@@ -627,14 +632,13 @@ function getERC721MetadataSchema(CID,ArtName,Link) {
 
 
 async function generate_NFT_info(address) {
+
     //현재 계정의 토큰 개수 리턴
     var balance = parseInt(await getBalanceOf(address));
     var index_array = Array.from(Array(balance).keys());
 
     //토큰 정보 저장
-    
     var token_infos_array = [];
-
 
     if (balance === 0) {
       return {TokenNum: balance};
@@ -651,16 +655,13 @@ async function generate_NFT_info(address) {
          token_infos.ArtLink = metadata.properties.image.description;
          token_infos_array.push({token_infos});
       }
-      
-
     }
-    
     return {TokenNum: balance, token_info: token_infos_array};
 }
 
 //토큰이 이미 발행되었는지 여부 확인
 async function isTokenAlreadyCreated(CID) {
-    return await atContract.methods.isTokenAlreadyCreated(CID).call(); //from YoutubeThumbnailToken.sol
+    return await atContract.methods.isTokenAlreadyCreated(CID).call(); //from ArtToken.sol
 }
 
 //계정 보유 토큰 수 확인

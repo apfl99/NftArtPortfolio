@@ -50,7 +50,7 @@ contract ArtToken is ERC721Full { //ERC721Full을 openzepplin라이브러리에�
         return (arts[_tokenId].author, arts[_tokenId].dateCreated, arts[_tokenId].artName);
     }
 
-    // videoId -> 사용 여부 확인(bool)
+    // CID -> 사용 여부 확인(bool)
     function isTokenAlreadyCreated(string memory _CID) public view returns (bool) {
         return artIdsCreated[_CID] != 0 ? true : false;
     }

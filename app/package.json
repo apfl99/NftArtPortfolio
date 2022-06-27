@@ -27,7 +27,7 @@
   "author": "",
   "license": "ISC",
   "bin": {
-    "ntfartportfolio": "bin/www.js"
+    "nftartportfolio": "bin/www.js"
   },
   "keywords": [],
   "description": "",
